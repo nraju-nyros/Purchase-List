@@ -1,9 +1,11 @@
-import React from "react";
-import { Table, Row, Col, Button, Tooltip,Input } from "antd";
+import React, { useState } from "react";
+import { Table, Row, Col, Button, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
+import { Link, useHistory } from "react-router-dom";
 
 export const Test = () => {
+  
   const coloumns = [
     {
       title: "Document",
@@ -180,8 +182,24 @@ export const Test = () => {
       d_date: "21/08/2019",
     },
   ];
+
+  const [searchList, setSearchList] = useState(data)
+  const [filterSearch, setFilterSearch] = useState(data)
+  console.log("printing data ", searchList)
   function onChange(pagination, filters, sorter, extra) {
     console.log("here is the params : ", pagination, filters, sorter, extra);
+  }
+  const handleSearch = (val)=>{
+    const datas = val.target.value
+    console.log("inside handle search function : ",datas)
+    let querry = datas.toLowerCase()
+    let result = []
+    result = searchList.filter((item)=>{
+      return(
+        item.document.toString().toLowerCase().indexOf(querry) >= 0
+      )
+    })
+    setFilterSearch(result)
   }
 
   const { Search } = Input;
@@ -194,9 +212,19 @@ export const Test = () => {
             push={7}
             style={{ textAlign: "right", margin: "20px 0 20px 10px" }}
           >
-            <Button type="primary" shape="round" size={"middle"}>
-              <h3>+ Create Purchase Requisition</h3>
-            </Button>
+            <div>
+              {/* <Link to="/createPurchase">
+                <Button type="primary" shape="round" size={"middle"}  >
+                <h3>+ Create Purchase Requisition</h3>
+                </Button>
+                </Link> */}
+
+              <Link to="/createPurchase">
+                <Button className="py-0 inline-flex items-center border border-daisy-bush rounded-md px-3">
+                  <h3>+ Create Purchase Requisition</h3>
+                </Button>
+              </Link>
+            </div>
           </Col>
           <Col
             span={4}
@@ -213,14 +241,27 @@ export const Test = () => {
           <br />
         </Row>
         <Row>
-          <Col span={6} style={{ textAlign: "left", margin: "0 0 20px 10px" }}>
-            <Button type="primary" shape="round" icon={<SearchOutlined />}>
-              Search Document No
-            </Button>
+          <Col span={6}>
+            {/* <Col span={6} style={{ textAlign: "left", margin: "0 0 20px 10px" }}> */}
+            <Input
+              type="search"
+              placeholder="Search document no"
+              className="font-poppins font-medium text-xs rounded-lg leading-normal"
+              style={{
+                height: "45px",
+                color: "#383A65",
+                backgroundColor: "#fff",
+                cursor: "text",
+                textAlign: "left",
+                margin: "0 0 20px 10px",
+              }}
+              icon={<SearchOutlined/>}
+              onChange = {handleSearch}
+            />
           </Col>
           <Col style={{ textAlign: "center", margin: "20px", padding: "5px" }}>
             <div>
-              <Table columns={coloumns} dataSource={data} onChange={onChange} />
+              <Table columns={coloumns} dataSource={filterSearch} onChange={onChange} />
             </div>
           </Col>
         </Row>
