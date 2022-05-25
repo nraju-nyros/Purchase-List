@@ -10,7 +10,7 @@ import {
 import * as yup from "yup";
 import "antd/dist/antd.css";
 import { CustomError } from "./CustomError";
-import { Button, Card, Col, Row } from "antd";
+import { Button, Card, Col, Row,Input } from "antd";
 import "./Purchase.css";
 import "../../App.css"
 import {Link , useHistory } from 'react-router-dom'
@@ -63,7 +63,7 @@ export const CreatePurchase1 = () => {
 
   const { touched, errors, handleSubmit, values, setFieldValue, setErrors } =
     formik;
-
+  
   return (
     <div>
       <FormikProvider value={formik}>
@@ -95,17 +95,11 @@ export const CreatePurchase1 = () => {
                               <div className="px-8 pt-8">
                                 <Row gutter={50}>
                                   <Col span={12}>
-                                    <div className="mt-4 mb1  input_text_color ">
+                                    <div className="mt-4 mb1  input_text_color 13 ">
                                       <label>Material</label>
                                       <br />
-                                      {/* <Field
-                                        name={`materialDetails.${i}.material`}
-                                        type="text"
-                                        placeholder="Enter Material Id"
-                                        className="mt-4 mb1 input_text_color"
-                                      /> */}
-                                      <input
-                                        id={`materialDetails.${i}.material`}
+                            
+                                      <Input
                                         placeholder="Enter Material Id"
                                         name={`materialDetails.${i}.material`}
                                         type="text"
@@ -113,20 +107,24 @@ export const CreatePurchase1 = () => {
                                         className="mt-4 mb1 input_text_color"
                                         // value={formik.values.materialDetails[i].material}
                                         />
-                                      <CustomError
+
+                                      {/* <CustomError
                                         name={`materialDetails.${i}.material`}
-                                      />
+                                      /> */}
+                                      {errors.name && <div>{errors.name}</div>}
+
                                     </div>
                                   </Col>
 
                                   <Col span={12}>
                                     <div className="mt-4 mb1 input_text_color ">
                                       <label>Storage Location</label> <br />
-                                      <Field
+                                      <Input
                                         name={`materialDetails.${i}.storage_location`}
                                         type="text"
                                         placeholder="Enter Storage Location"
                                         className="mt-4 mb1 input_text_color"
+                                        onChange={formik.handleChange}
                                       />
                                       <CustomError
                                         name={`materialDetails.${i}.storage_location`}
@@ -141,11 +139,12 @@ export const CreatePurchase1 = () => {
                                   <Col span={12}>
                                     <div className="mt-4 mb1  input_text_color ">
                                       <label>Quantity</label> <br />
-                                      <Field
+                                      <Input
                                         name={`materialDetails.${i}.quantity`}
                                         type="text"
                                         placeholder="Enter Quantity"
                                         className="mt-4 mb1 input_text_color"
+                                        onChange={formik.handleChange}
                                       />
                                       <CustomError
                                         name={`materialDetails.${i}.quantity`}
@@ -156,11 +155,12 @@ export const CreatePurchase1 = () => {
                                   <Col span={12}>
                                     <div className="mt-4    input_text_color ">
                                       <label>Plant</label> <br />
-                                      <Field
+                                      <Input
                                         name={`materialDetails.${i}.plant`}
                                         type="text"
                                         placeholder="Enter Plant"
                                         className="mt-4 mb1 input_text_color"
+                                        onChange={formik.handleChange}
                                       />
                                       <CustomError
                                         name={`materialDetails.${i}.plant`}
@@ -176,11 +176,12 @@ export const CreatePurchase1 = () => {
                                     <div className="mt-4 mb1  input_text_color ">
                                       <label>Account Assignment</label>
                                       <br />
-                                      <Field
+                                      <Input
                                         name={`materialDetails.${i}.account_assignment`}
                                         type="text"
                                         placeholder="Enter Account Assignment"
                                         className="mt-4 mb1 input_text_color"
+                                        onChange={formik.handleChange}
                                       />
                                       <CustomError
                                         name={`materialDetails.${i}.account_assignment`}
@@ -220,11 +221,11 @@ export const CreatePurchase1 = () => {
                                     <div className="mt-4 mb1  input_text_color ">
                                       <label>UOM</label>
                                       <br />
-                                      <Field
+                                      <Input
                                         name={`materialDetails.${i}.uom`}
                                         type="text"
                                         placeholder="Enter UOM"
-                                        
+                                        onChange={formik.handleChange}
                                         // className="mt-4 mb1 input_text_color"
                                       />
                                       <CustomError
