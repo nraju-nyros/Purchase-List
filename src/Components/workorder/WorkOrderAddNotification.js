@@ -338,8 +338,9 @@ export const WorkOrderAddNotification = ({
         : notificationList.map((r) => r.key)
     );
   };
-
+  console.log("printing selectedRowKeys AddNotification ", selectedRowKeys);
   handleSelectedNotification(selectedRowKeys);
+
   const headerCheckbox = (
     <Checkbox
       checked={selectedRowKeys.length}

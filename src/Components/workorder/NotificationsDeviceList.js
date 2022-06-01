@@ -360,6 +360,7 @@ export const NotificationsDeviceList = ({
                 setIsCreateNotification(true)
               }
               pagination={false}
+              rowKey={"Id"}
             />
           )}
         </div>
