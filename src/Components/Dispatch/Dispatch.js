@@ -4,8 +4,10 @@ import { SearchOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import { Link, useHistory } from "react-router-dom";
 import { DispatchCreate } from "./DispatchCreate";
+import { useNavigate } from "react-router-dom";
 
 export const Dispatch = () => {
+  let history = useNavigate();
     const coloumns = [
         {
           title: "Dispatch Id",
@@ -76,6 +78,9 @@ export const Dispatch = () => {
           render: (text, record)=>{
               const buttonOnClick = ()=>{
                   console.log("inside action action")
+                  history(
+                     "/completedispatch"  
+                );
               }
               return (
                 <div className="flex">

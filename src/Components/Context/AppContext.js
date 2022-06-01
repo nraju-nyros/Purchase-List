@@ -4,11 +4,13 @@ import { message, Spin } from "antd";
 import { CloudSyncOutlined, LoadingOutlined } from "@ant-design/icons";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { Base64URLEncode } from "./helpers";
-import { HttpHelper,
-    SessionTimeoutError,
-    ServiceUnavailableError,
-    AuthenticationError,
-    UserLockedError,} from "./httpHelper";
+import {
+  HttpHelper,
+  SessionTimeoutError,
+  ServiceUnavailableError,
+  AuthenticationError,
+  UserLockedError,
+} from "./httpHelper";
 import { CustomModal } from "./CustomModal";
 // import { randomBytes } from "crypto";
 import { SetFeaturesUrl } from "./app-feature";

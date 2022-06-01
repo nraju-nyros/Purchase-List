@@ -37,7 +37,7 @@ export const DataTable = (props) => {
     disabledCheckboxes,
     showHeader,
     rowClassName,
-    expandedRowKeys
+    expandedRowKeys,
   } = props;
   if (props.showViewMoreExpandable) {
     showViewMoreExpandable = props.showViewMoreExpandable;
@@ -249,10 +249,16 @@ export const DataTable = (props) => {
           rowSelection={rowSelection}
           // this
           rowClassName={(record) =>
-            disabledCheckboxes ? record.ParentId && "disabled-row" : rowClassName ? rowClassName : ''
+            disabledCheckboxes
+              ? record.ParentId && "disabled-row"
+              : rowClassName
+              ? rowClassName
+              : ""
           }
           showHeader={showHeader == false ? false : true}
-          onExpand={(expanded, record) => props.onExpand ? props.onExpand(expanded, record) : ''}
+          onExpand={(expanded, record) =>
+            props.onExpand ? props.onExpand(expanded, record) : ""
+          }
           expandIconColumnIndex={expandIconColumnIndex}
           expandIcon={({ expanded, onExpand, record }) =>
             expanded ? (

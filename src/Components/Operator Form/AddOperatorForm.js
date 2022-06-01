@@ -191,7 +191,7 @@ export const AddOperatorForm = ({
                       optionsList={operatorNameList}
                       onChange={(value, key) => {
                         setFieldValue("operator", key["key"]);
-                        setFieldValue("name", key["Value"]);
+                        setFieldValue("name", key["value"]);
                         console.log(
                           "printing key inside onChange of SelectDropdown",
                           key
@@ -216,9 +216,9 @@ export const AddOperatorForm = ({
                       optionValueName="Value"
                       optionDisplayName="Value"
                       className="border dropdown_blue_text  border-white-lilac colorFix"
-                      onChange={(val, key) => {
-                        setFieldValue("operatorType", key["key"]);
+                      onChange={(val, key) => {  
                         setFieldValue("operatorTypeName", val);
+                        setFieldValue("operatorType", key["key"]);
                         console.log(
                           "printing key inside onChange of SelectDropdown 2 ",
                           key
