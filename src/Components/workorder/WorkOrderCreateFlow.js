@@ -6,6 +6,7 @@ import { Wizard } from "../Wizard/Wizard";
 import { useNavigate, useHistory} from "react-router-dom";
 import { NotificationsDeviceList } from "./NotificationsDeviceList";
 import { WorkOrderAddNotification } from "./WorkOrderAddNotification";
+import { WorkOrderAddHeader } from "./WorkOrderAddHeader";
 const WorkOrderCreateFlow = (props) => { 
     const history = useNavigate();
   const ctx = useContext(AppContext);
@@ -25,6 +26,7 @@ const WorkOrderCreateFlow = (props) => {
   const [notificationList, setNotificationList] = useState([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
+  const [notifactionData , setNotifactionData] = useState([]);
 
 //   useEffect(async () => {
 //     if (history?.location?.state?.equipmentSerialNo) {
@@ -127,6 +129,7 @@ const WorkOrderCreateFlow = (props) => {
           query={query}
           handleEquipmentSearch={(val) => setQuery(val)}
           setQuery={setQuery}
+          setNotifactionData={setNotifactionData}
         />
       ),
     },
@@ -149,6 +152,8 @@ const WorkOrderCreateFlow = (props) => {
           setNotificationList={setNotificationList}
           selectedRowKeys={selectedRowKeys}
           setSelectedRowKeys={setSelectedRowKeys}
+          setNotifactionData={setNotifactionData}
+          notifactionData={notifactionData}
         />
         
       ),
@@ -156,27 +161,26 @@ const WorkOrderCreateFlow = (props) => {
     {
       title: "Create Work Order",
       content: (
-        // <WorkOrderAddHeader
-        //   current={current}
-        //   handleNext={next}
-        //   deviceList={deviceList}
-        //   selectedDevice={selectedDevice}
-        //   value={selectedDevice}
-        //   handleDeviceSelection={(value) => setSelectedDevice(value)}
-        //   handleEquipmentSearch={(val) => setQuery(val)}
-        //   handlePrev={prev}
-        //   selectedNotification={selectedNotificationTechStatus}
-        //   handleSelectedNotification={(val) => setSelectedNotification(val)}
-        //   handleClose={props.onClose}
-        //   selectedRowKeys={selectedRowKeys}
-        //   setSelectedRowKeys={setSelectedRowKeys}
-        //   isModalVisible={isModalVisible}
-        //   setIsModalVisible={setIsModalVisible}
-        //   isConfirmModalVisible={isConfirmModalVisible}
-        //   setIsConfirmModalVisible={setIsConfirmModalVisible}
-        // />
-        <>
-        </>
+        <WorkOrderAddHeader
+          current={current}
+          handleNext={next}
+          deviceList={deviceList}
+          selectedDevice={selectedDevice}
+          value={selectedDevice}
+          handleDeviceSelection={(value) => setSelectedDevice(value)}
+          handleEquipmentSearch={(val) => setQuery(val)}
+          handlePrev={prev}
+          selectedNotification={selectedNotificationTechStatus}
+          handleSelectedNotification={(val) => setSelectedNotification(val)}
+          handleClose={props.onClose}
+          selectedRowKeys={selectedRowKeys}
+          setSelectedRowKeys={setSelectedRowKeys}
+          isModalVisible={isModalVisible}
+          setIsModalVisible={setIsModalVisible}
+          isConfirmModalVisible={isConfirmModalVisible}
+          setIsConfirmModalVisible={setIsConfirmModalVisible}
+        />
+       
       ),
     },
   ];

@@ -27,6 +27,8 @@ export const WorkOrderAddNotification = ({
   setNotificationList,
   setSelectedRowKeys,
   selectedRowKeys,
+  setNotifactionData,
+  notifactionData
 }) => {
   const ctx = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -38,6 +40,7 @@ export const WorkOrderAddNotification = ({
   const [searchValue, setSearchValue] = useState("");
   const [sortByValue, setSortByValue] = useState("");
   const [orderByValue, setOrderByValue] = useState("");
+  const [notification , setNotifaction] = useState([]);
   const history = useNavigate();
 
   const initialValues = {
@@ -65,6 +68,7 @@ export const WorkOrderAddNotification = ({
     3: <span className="opacity-border-green">Low</span>,
   };
   console.log("printing selectedDevice AddNotification ", selectedDevice);
+  console.log("printing notificationData ",notifactionData)
   const getNotificationList = async () => {
     let queryParams = {
       id: initialValues.equipmentNo,
@@ -81,7 +85,7 @@ export const WorkOrderAddNotification = ({
       let notificationList =
         response &&
         response &&
-        response.filter((n) => !n.ParentId).map((item, index) => {
+        response.map((item, index) => {
           let notificationData = { ...item, key: item.Id };
           return notificationData;
         });
@@ -110,114 +114,114 @@ export const WorkOrderAddNotification = ({
       SerialNo: "02",
       SyncCode: "waiting",
     },
-    {
-      key: 2,
-      Priority : "Medium",
-      Id : 2,
-      Type: "M2",
-      CreatedOn : "2018-06-04",
-      EquipmentNo : 20844 ,
-      DocumentNo: "AG00109",
-      TechStatus : " rejected ",
-      OperStatus : " - ",
-      AdminNo: "AD00901",
-      Description: "desc121",
-      Notification: "notif 010",
-      TechStatusName: "aprooved",
-      EquipmentNumber: "EQ00153",
-      SerialNo: "01",
-      SyncCode: "approved",
-    },
-    {
-      key: 3,
-      Id : 3,
-      Type: "M3",
-      EquipmentNo : 877001 ,
-      Priority : "High",
-      CreatedOn : "2003-09-28",
-      TechStatus : " sanctioned ",
-      DocumentNo: "AG00139",
-      OperStatus : " - ",
-      AdminNo: "AD00938",
-      Description: "desc101",
-      Notification: "notif 002",
-      TechStatusName: "pending",
-      EquipmentNumber: "EQ00100",
-      SerialNo: "01",
-      SyncCode: "approved",
-    },
-    {
-      key: 4,
-      Id : 4,
-      Type: "M4",
-      Priority : "critical",
-      EquipmentNo : 344900 ,
-      CreatedOn : "2020-12-21",
-      DocumentNo: "AG00216",
-      OperStatus : " - ",
-      TechStatus : " declined ",
-      AdminNo: "AD00763",
-      Description: "desc244",
-      Notification: "notif 209",
-      TechStatusName: "aprooved",
-      EquipmentNumber: "EQ00287",
-      SerialNo: "01",
-      SyncCode: "approved",
-    },
-    {
-      key: 5,
-      Id : 5,
-      Type: "M5",
-      DocumentNo: "AG00236",
-      EquipmentNo : 344900 ,
-      CreatedOn : "2022-03-19",
-      Priority : "Low",
-      OperStatus : " - ",
-      TechStatus : " sanctioned ",
-      AdminNo: "AD00712",
-      Description: "desc237",
-      Notification: "notif 269",
-      TechStatusName: "pending",
-      EquipmentNumber: "EQ00258",
-      SerialNo: "02",
-      SyncCode: "pending",
-    },
-    {
-      key: 6,
-      Id : 6,
-      Type: "M6",
-      DocumentNo: "AG00583",
-      EquipmentNo : 178000 ,
-      CreatedOn : "2014-07-10",
-      Priority : "High",
-      TechStatus : " rejected ",
-      OperStatus : " - ",
-      AdminNo: "AD00478",
-      Description: "desc004",
-      Notification: "notif 562",
-      TechStatusName: "approved",
-      EquipmentNumber: "EQ00012",
-      SerialNo: "01",
-      SyncCode: "approved",
-    },
-    {
-      key: 7,
-      Id : 7,
-      Type: "M7",
-      OperStatus : " - ",
-      EquipmentNo : 123340 ,
-      CreatedOn : "2016-10-31",
-      DocumentNo: "AG00547",
-      TechStatus : " declined ",
-      Priority : "High",
-      AdminNo: "AD00493",
-      Description: "desc087",
-      Notification: "notif 523",
-      TechStatusName: "pending",
-      EquipmentNumber: "EQ00411",
-      SerialNo: "02",
-      SyncCode: "pending",
-    },
+    // {
+    //   key: 2,
+    //   Priority : "Medium",
+    //   Id : 2,
+    //   Type: "M2",
+    //   CreatedOn : "2018-06-04",
+    //   EquipmentNo : 20844 ,
+    //   DocumentNo: "AG00109",
+    //   TechStatus : " rejected ",
+    //   OperStatus : " - ",
+    //   AdminNo: "AD00901",
+    //   Description: "desc121",
+    //   Notification: "notif 010",
+    //   TechStatusName: "aprooved",
+    //   EquipmentNumber: "EQ00153",
+    //   SerialNo: "01",
+    //   SyncCode: "approved",
+    // },
+    // {
+    //   key: 3,
+    //   Id : 3,
+    //   Type: "M3",
+    //   EquipmentNo : 877001 ,
+    //   Priority : "High",
+    //   CreatedOn : "2003-09-28",
+    //   TechStatus : " sanctioned ",
+    //   DocumentNo: "AG00139",
+    //   OperStatus : " - ",
+    //   AdminNo: "AD00938",
+    //   Description: "desc101",
+    //   Notification: "notif 002",
+    //   TechStatusName: "pending",
+    //   EquipmentNumber: "EQ00100",
+    //   SerialNo: "01",
+    //   SyncCode: "approved",
+    // },
+    // {
+    //   key: 4,
+    //   Id : 4,
+    //   Type: "M4",
+    //   Priority : "critical",
+    //   EquipmentNo : 344900 ,
+    //   CreatedOn : "2020-12-21",
+    //   DocumentNo: "AG00216",
+    //   OperStatus : " - ",
+    //   TechStatus : " declined ",
+    //   AdminNo: "AD00763",
+    //   Description: "desc244",
+    //   Notification: "notif 209",
+    //   TechStatusName: "aprooved",
+    //   EquipmentNumber: "EQ00287",
+    //   SerialNo: "01",
+    //   SyncCode: "approved",
+    // },
+    // {
+    //   key: 5,
+    //   Id : 5,
+    //   Type: "M5",
+    //   DocumentNo: "AG00236",
+    //   EquipmentNo : 344900 ,
+    //   CreatedOn : "2022-03-19",
+    //   Priority : "Low",
+    //   OperStatus : " - ",
+    //   TechStatus : " sanctioned ",
+    //   AdminNo: "AD00712",
+    //   Description: "desc237",
+    //   Notification: "notif 269",
+    //   TechStatusName: "pending",
+    //   EquipmentNumber: "EQ00258",
+    //   SerialNo: "02",
+    //   SyncCode: "pending",
+    // },
+    // {
+    //   key: 6,
+    //   Id : 6,
+    //   Type: "M6",
+    //   DocumentNo: "AG00583",
+    //   EquipmentNo : 178000 ,
+    //   CreatedOn : "2014-07-10",
+    //   Priority : "High",
+    //   TechStatus : " rejected ",
+    //   OperStatus : " - ",
+    //   AdminNo: "AD00478",
+    //   Description: "desc004",
+    //   Notification: "notif 562",
+    //   TechStatusName: "approved",
+    //   EquipmentNumber: "EQ00012",
+    //   SerialNo: "01",
+    //   SyncCode: "approved",
+    // },
+    // {
+    //   key: 7,
+    //   Id : 7,
+    //   Type: "M7",
+    //   OperStatus : " - ",
+    //   EquipmentNo : 123340 ,
+    //   CreatedOn : "2016-10-31",
+    //   DocumentNo: "AG00547",
+    //   TechStatus : " declined ",
+    //   Priority : "High",
+    //   AdminNo: "AD00493",
+    //   Description: "desc087",
+    //   Notification: "notif 523",
+    //   TechStatusName: "pending",
+    //   EquipmentNumber: "EQ00411",
+    //   SerialNo: "02",
+    //   SyncCode: "pending",
+    // },
   ];
 
   const columns = [
@@ -317,10 +321,19 @@ export const WorkOrderAddNotification = ({
 
   useEffect(() => {
     getNotificationList();
+    // getDumyData();
   }, []);
 
+  // const getDumyData = () => {
+  //   setIsLoading(true);
+  //   const dummyData = notifactionData
+  //   console.log("inside getDumyData dummyData : ", dummyData);
+  //   setNotificationList(dummyData);
+  //   setTotalNotifications(dummyData.length);
+  //   setIsLoading(false);
+  // }
   const handleSelect = (record, selected) => {
-    console.log(record, "record");
+    console.log("record inside handleSelect :" ,record );
     if (selected) {
       setSelectedRowKeys((keys) => [...keys, record.key]);
     } else {

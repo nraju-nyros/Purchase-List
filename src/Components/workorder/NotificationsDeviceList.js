@@ -19,6 +19,7 @@ export const NotificationsDeviceList = ({
   handleEquipmentSearch,
   selectedDevice,
   setQuery,
+  setNotifactionData,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isCreateNotification, setIsCreateNotification] = useState(false);
@@ -38,11 +39,11 @@ export const NotificationsDeviceList = ({
         const handleCheckBox = (e, id) => {
             console.log("inside handleCheckBox text ", text);
           handleDeviceSelection(record);
+          setNotifactionData(record);
           console.log("inside handleCheckBox data ", data);
           let tempData = data.filter((item) => {
             if (item.Id === id) {
               item.isActive = true;
-              
             } else {
               item.isActive = false;
             }
@@ -142,7 +143,7 @@ export const NotificationsDeviceList = ({
       width: "6vw",
     },
   ];
-  console.log("printing selectedDevice ",selectedDevice);
+  
   const resp = [
     {
       key: 1,
