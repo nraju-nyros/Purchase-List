@@ -79,12 +79,12 @@ export const WorkOrderAddNotification = ({
       limit: pageSize,
     };
     setIsLoading(true);
-    const response = resp
+    const response = selectedDevice
     console.log("inside getNotificationList response : ", response);
     if (response) {
       let notificationList =
         response &&
-        response &&
+        // response &&
         response.map((item, index) => {
           let notificationData = { ...item, key: item.Id };
           return notificationData;
