@@ -22,29 +22,30 @@ export const NotificationSearch = ({
   const [notificationType, setNotificationType] = useState([]);
 
   const onSubmit = (val, { resetForm }) => {
-    console.log("printing val inside onSubmit of Filter", val);
     const finalObject = val;
+    console.log("printing finalObject inside onSubmit of Filter", finalObject);
     let FilterdateRange = Object.entries(val);
-    let d = FilterdateRange[6].map((item) => {
-      let dateFrom = item[0];
-      let dateTo = item[1];
-      var date = new Date(dateFrom);
-      var newdateFrom =
-        date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
-      var date2 = new Date(dateTo);
-      var newdateTo =
-        date2.getMonth() +
-        1 +
-        "/" +
-        date2.getDate() +
-        "/" +
-        date2.getFullYear();
-      let finalDate = [newdateFrom, newdateTo];
-      let filterData = finalDate.filter((f) => f !== "NaN/NaN/NaN");
+    // let d = FilterdateRange[6].map((item) => {
+    //   let dateFrom = item[0];
+    //   let dateTo = item[1];
+    //   var date = new Date(dateFrom);
+    //   var newdateFrom =
+    //     date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
+    //   var date2 = new Date(dateTo);
+    //   var newdateTo =
+    //     date2.getMonth() +
+    //     1 +
+    //     "/" +
+    //     date2.getDate() +
+    //     "/" +
+    //     date2.getFullYear();
+    //   let finalDate = [newdateFrom, newdateTo];
+    //   let filterData = finalDate.filter((f) => f !== "NaN/NaN/NaN");
 
-      return filterData;
-    });
-    finalObject.date = d[1];
+    //   return filterData;
+    // });
+    // finalObject.date = d[1];
+    console.log("printing inside of finalObject inside onSubmit of Filter", finalObject);
     setAdvanceFilterData(finalObject);
     setIsFilterModalVisible(false);
   };

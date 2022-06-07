@@ -9,6 +9,7 @@ import { DispatchCreate } from './Components/Dispatch/DispatchCreate';
 import CompleteDispatchNotification from './Components/Complete Dispatch/CompleteDispatchNotification';
 import { WorkOrderList } from './Components/workorder/WorkOrderList';
 import { NotificationsList } from './Components/Notification Module/NotificationList';
+import { WorkInProcessList } from './Components/WorkInProcess/WorkInProcessList';
 const history = createBrowserHistory();
 function App() {
  
@@ -16,9 +17,10 @@ function App() {
     <>
        <Router>
        <Routes>
+       <Route exact path="/workorder" element={<WorkInProcessList/>} />
        {/* <Route exact path="/" element={<Dispatch/>} /> */}
-       {/* <Route exact path="/" element={<NotificationsList/>} /> */}
-       <Route exact path="/" element={<WorkOrderList/>} />
+       <Route exact path="/" element={<NotificationsList/>} />
+       {/* <Route exact path="/" element={<WorkOrderList/>} /> */}
        <Route exact path="/completedispatch" element={<CompleteDispatchNotification/>} />
        <Route exact path="/dispatchcreate" element={<DispatchCreate/>} />
        {/* <Route exact path="/" element={<CreatePurchase1/>} /> */}

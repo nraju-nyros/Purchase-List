@@ -87,7 +87,7 @@ export const NotificationCreateFlow = ({
         });
       }
     }, []);
-  
+  console.log("printing selectedDevice in NotificationCreateFlow ", selectedDevice);
     const steps = [
       {
         title: "Select Equipment",

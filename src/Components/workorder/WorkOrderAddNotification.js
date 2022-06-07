@@ -43,6 +43,8 @@ export const WorkOrderAddNotification = ({
   const [notification , setNotifaction] = useState([]);
   const history = useNavigate();
 
+  console.log("values is printed here", value);
+  
   const initialValues = {
     ordCode: value?.OrgCode,
     adminNo: value?.AdminNo,

@@ -1,56 +1,44 @@
-import {
-  CheckOutlined,
-  CloseOutlined,
-  PlusOutlined,
-  QuestionCircleOutlined,
-} from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Col, Modal, Row, Tooltip } from "antd";
 import React, { useContext, useEffect, useState } from "react";
 import { useHistory, useNavigate } from "react-router-dom";
-import { Layout } from "../Context/Layout";
 import { DataTable, DataTypes } from "../Stepper Form/DataTable";
+import { Layout } from "../Context/Layout";
 import { AppContext } from "../Context/AppContext";
 import { SideDrawer } from "../Wizard/SideDrawer";
-import { stripLeadingZeros } from "../Context/helpers";
-import { NotificationCreateFlow } from "./NotificationCreateFlow";
-import { NotificationSearch } from "./NotificationSearch";
+import { SearchBox } from "../SearchBox";
+import NotificationsExpandableView from "./NotificationsExpandableView";
+import { WorkInProcessSearch } from "./WorkInProcessSearch";
 
-export const NotificationsList = () => {
+export const WorkInProcessNotificationList = () => {
   const ctx = useContext(AppContext);
-  // const accessObject = ctx.userInfo.UserAccess;
+  const searchIcon = {
+    backgroundImage:
+      'url( {process.env.PUBLIC_URL + "/images/icons/search.svg"})',
+    backgroundPosition: "center left",
+    backgroundRepeat: "no-repeat",
+  };
+
   const [notificationList, setNotificationList] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
-  const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
   const [isSuccessModalUpdate, setIsSuccessModalUpdate] = useState(false);
-  const [isSuccessModalDelete, setIsSuccessModalDelete] = useState(false);
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
   const [totalNotifications, setTotalNotifications] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(100);
   const [currentLevel, setCurrentLevel] = useState(1);
   const [sortByValue, setSortByValue] = useState("");
   const [orderByValue, setOrderByValue] = useState("");
   const [offsetValue, setOffsetValue] = useState(1);
   const [searchValue, setSearchValue] = useState("");
   const [levelRecord, setLevelRecord] = useState([]);
-  const [isDeleteModal, setisDeleteModal] = useState(false);
-  const [isReprocess, setIsReprocess] = useState(false);
-  const [currentRow, setCurrentRow] = useState(null);
-  const [error, setError] = useState(null);
-  const [updateModel, setUpdateModel] = useState(false);
-  const [current, setCurrent] = useState(0);
-  const [selectedDevice, setSelectedDevice] = useState("0");
+  const [UpdateModel, setUpdateModel] = useState(false);
   const [notificationPayload, setNotificationPayload] = useState(null);
-  const [editValues, setEditValues] = useState([]);
   const [updateNotificationModel, setUpdateNotificationModel] = useState(false);
   const [updateStatus, seupdateStatus] = useState(0);
+  const [notificationTypeList, setNotificationTypeList] = useState([]);
   const [page, setPage] = useState(1);
   const [sortfilterStatus, setSortFilterStatus] = useState(false);
-  const [resequipment, setEquipment] = useState([]);
-  const [draw, setDraw] = useState(false);
-  const [showHelpModal, setShowHelpModal] = useState(false);
-
   const [advanceFilterData, setAdvanceFilterData] = useState({
     notificationNumber: "",
     material: "",
@@ -65,9 +53,9 @@ export const NotificationsList = () => {
   let includeCompletedNotifications =
     advanceFilterData?.isCompletedNotification;
   let notificationType = advanceFilterData?.searchNotificationType;
-  let startDate = advanceFilterData?.startDate;
-  let endDate = advanceFilterData?.endDate;
-  var search1 = searchValue;
+  let startDate = advanceFilterData?.date && advanceFilterData.date[0];
+  let endDate = advanceFilterData?.date && advanceFilterData.date[1];
+  var search1 = searchValue && searchValue;
 
   useEffect(() => {
     if (isFilterModalVisible === true) {
@@ -84,23 +72,94 @@ export const NotificationsList = () => {
     isFilterModalVisible,
   ]);
 
+  useEffect(() => {
+    if (!notificationTypeList.length) getNotificationsType();
+  }, []);
+
   const list = [
+    {
+      AdminNo: "C21",
+      Coding: "432",
+      CreatedBy: "DEVUSER1@shipcomwireless.com",
+      CreatedOn: "06/02/2022 21:58:27",
+      DefectGroup: "ICC",
+      DefectLocation: "CAB",
+      Description: "Run through 2 - 6.2.22",
+      EquipmentNo: "000000001011212081",
+      Id: "50573f18-9a32-42e8-bf89-53e6a6afaf00",
+      InProcess: 1,
+      ModelNo: "M2A3",
+      ParentId: "affaf38f-92f5-45ce-bbb8-1083fa6de559",
+      Priority: "2",
+      PriorityName: "2-Medium",
+      ProcessStatus: 2,
+      ProcessStatusName: "InProcess",
+      Remarks: "remark2 6.2.22",
+      SerialNo: "2AGR0683Y",
+      Status: 1,
+      SyncCode: 2,
+      SyncText: "Pending",
+      TechStatus: "E0005",
+      TechStatusIcon: "X",
+      TechStatusName: "X-X-NMC",
+      Type: "M1",
+      TypeName: "M1-Maintenance Request",
+      UpdatedBy: "DEVUSER1@shipcomwireless.com",
+      UpdatedOn: "2022-06-04 12:19:08",
+      WorkOrderNo: "affaf38f-92f5-45ce-bbb8-1083",
+      Notification: "656",
+    },
+    {
+      AdminNo: "C21",
+      Coding: "777",
+      CreatedBy: "DEVUSER1@shipcomwireless.com",
+      CreatedOn: "06/02/2022 21:53:39",
+      DefectGroup: "BCP",
+      DefectLocation: "10K",
+      Description: "Notification desc Run through 6.2.22",
+      EquipmentNo: "000000001011212081",
+      Id: "788fd306-eac1-4b24-9c33-a83fa1913a79",
+      InProcess: 1,
+      Material: "014360005",
+      ModelNo: "M2A3",
+      NotifTime: "21:53:39",
+      OrgCode: "WAH0C0",
+      ParentId: "affaf38f-92f5-45ce-bbb8-1083fa6de559",
+      Priority: "1",
+      PriorityName: "1-High (X)",
+      ProcessStatus: 2,
+      ProcessStatusName: "InProcess",
+      Remarks: "Notification Remarks Run through 6.2.22",
+      SerialNo: "2AGR0683Y",
+      StartDate: "20220602",
+      Status: 1,
+      StorageLoc: "CEPA",
+      SyncCode: 2,
+      SyncText: "Pending",
+      TechStatus: "E0003",
+      TechStatusIcon: "BIO",
+      TechStatusName: "BIO-Biological Cont",
+      Type: "M1",
+      TypeName: "M1-Maintenance Request",
+      UpdatedBy: "DEVUSER1@shipcomwireless.com",
+      UpdatedOn: "2022-06-04 12:18:49",
+      WorkOrderNo: "affaf38f-92f5-45ce-bbb8-1083",
+      Notification: "222",
+    },
     {
       AdminNo: "C11",
       Coding: "680",
       CreatedBy: "DEVUSER1@shipcomwireless.com",
-      CreatedOn: "05/23/2022 05:33:09",
+      CreatedOn: "05/09/2022 05:33:09",
       DefectGroup: "AMG",
       DefectLocation: "AMH",
       Description: "steve class changes 5.9",
-      DocumentNo: "103",
       EquipmentNo: "000000001011212104",
       Id: "a83e19f5-0ad9-43b3-a2fc-dab78190dbb4",
       InProcess: 1,
       Material: "014360005",
       ModelNo: "M2A3",
       NotifTime: "05:33:09",
-      OperStatus: "OperStatus 001",
       OrgCode: "WAH0C0",
       ParentId: "172514af-e10a-48bb-8432-01b07445b0b9",
       Priority: "2",
@@ -121,25 +180,23 @@ export const NotificationsList = () => {
       TypeName: "M1-Maintenance Request",
       UpdatedBy: "DEVUSER1@shipcomwireless.com",
       UpdatedOn: "2022-05-09 05:36:38",
-      WorkOrderNo: "WORK-688",
+      WorkOrderNo: "172514af-e10a-48bb-8432-01b0",
+      Notification: "116",
     },
     {
       AdminNo: "WAH0C0-",
-      CauseCode: "068",
       Coding: "777",
       CreatedBy: "DEVUSER1@shipcomwireless.com",
-      CreatedOn: "08/04/1998 04:47:55",
+      CreatedOn: "05/09/2022 04:47:55",
       DefectGroup: "AMG",
       DefectLocation: "DPM",
-      DocumentNo: "199",
       Description: "steve test 5.8",
       EquipmentNo: "000000001011182894",
       Id: "1b9b62a1-6d9a-482b-9181-7ab38920556d",
       InProcess: 1,
       Material: "009739533",
-      ModelNo: "",
+      ModelNo: "24",
       NotifTime: "04:47:55",
-      OperStatus: "OperStatus 403",
       OrgCode: "WAH0C0",
       ParentId: "a2d5e68b-2fed-4385-bc55-a5cc7c39b85d",
       Priority: "1",
@@ -159,23 +216,22 @@ export const NotificationsList = () => {
       Type: "M1",
       TypeName: "M1-Maintenance Request",
       UpdatedBy: "DEVUSER1@shipcomwireless.com",
-      UpdatedOn: "2022-05-09 04:48:39",
-      WorkOrderNo: "WORK-676",
+      UpdatedOn: "2022-06-06 00:51:39",
+      WorkOrderNo: "1234",
+      Notification: "8100",
     },
     {
       AdminNo: "UIC   -",
       CauseCode: "115",
       Coding: "360",
       CreatedBy: "DEVUSER1@shipcomwireless.com",
-      CreatedOn: "05/05/1997 04:37:16",
-      DocumentNo: "129",
+      CreatedOn: "05/09/2022 04:37:16",
       DefectGroup: "",
       DefectLocation: "",
       Description: "test",
       EquipmentNo: "000000001016587025",
       Id: "2f4c5032-aa12-4c43-a790-cf9435c1cefd",
       ModelNo: "",
-      OperStatus: "OperStatus 333",
       Priority: "2",
       PriorityName: "2-Medium",
       ProcessStatus: 2,
@@ -192,22 +248,20 @@ export const NotificationsList = () => {
       TypeName: "M1-Maintenance Request",
       UpdatedBy: "DEVUSER1@shipcomwireless.com",
       UpdatedOn: "2022-05-09 04:37:43",
-      WorkOrderNo: "WORK-199",
+      Notification: "008",
     },
     {
       AdminNo: "WAH0C0-",
       CauseCode: "099",
       Coding: "777",
       CreatedBy: "DEVUSER1@shipcomwireless.com",
-      CreatedOn: "10/04/2014 03:19:26",
-      DocumentNo: "181",
+      CreatedOn: "05/09/2022 03:19:26",
       DefectGroup: "",
       DefectLocation: "",
       Description: "tech statsus",
       EquipmentNo: "000000001011202839",
       Id: "9779c4f5-cac7-40fe-bc11-74b5af9cdaaa",
       ModelNo: "",
-      OperStatus: "OperStatus 223",
       Priority: "2",
       PriorityName: "2-Medium",
       ProcessStatus: 2,
@@ -224,9 +278,10 @@ export const NotificationsList = () => {
       TypeName: "M1-Maintenance Request",
       UpdatedBy: "DEVUSER1@shipcomwireless.com",
       UpdatedOn: "2022-05-09 04:36:17",
-      WorkOrderNo: "WORK-123",
+      Notification: "322",
     },
   ];
+
   const getNotificationList = async (
     searchBy = searchValue,
     sortBy = sortByValue,
@@ -242,43 +297,47 @@ export const NotificationsList = () => {
       orderBy: orderBy,
       offset: offset,
       limit: limit,
-      UseAdvancedFilter: sortfilterStatus,
+      UseAdvancedFilter: true,
+      IncludeCompletedNotifications: true,
       NotificationNumber: advanceFilterData?.notificationNumber,
       Material: advanceFilterData?.material,
-      IncludeCompletedNotifications: advanceFilterData?.isCompletedNotification,
       NotificationType: advanceFilterData?.searchNotificationType,
       Last90Days: advanceFilterData?.dateRange,
       StartDate: `${
-        advanceFilterData?.startDate  }`,
-      EndDate: `${advanceFilterData?.endDate}`,
+        advanceFilterData?.startDate && advanceFilterData.startDate
+      }`,
+      EndDate: `${advanceFilterData?.endDate && advanceFilterData.endDate}`,
     };
     const response = list;
-
     console.log("printing response in getNotificationList", response);
-    var newList = response.filter((item)=>{
-      return item.DocumentNo.toLowerCase().indexOf(search1) > -1;
-    })
+    console.log("printing search1 inside getNotificationList ",search1)
+    var newList = response.filter((item) => {
+      return item.Notification.indexOf(search1) > -1;
+    });
+
     var newFilterList = response.filter((item)=>{
-      return item.DocumentNo.toLowerCase().indexOf(queryParams.NotificationNumber) > -1 
-      && item.Type.indexOf(queryParams.Material) > -1;
-    })
-    if (search1 === undefined && queryParams.NotificationNumber === undefined &&  response) {
-      console.log("inside if condition ")
-      setNotificationList( response);
-      setTotalNotifications(response.length);
-    }
-    else if(search1 !== undefined && queryParams.NotificationNumber === undefined && response ) {
-      console.log("inside else if condition ")
-      console.log("printing newList ", newList);
-      setNotificationList(newList);
-      setTotalNotifications(newList.length);
-    }
-    else{
-      console.log("inside else condition  ")
-      console.log("printing newFilterList ", newFilterList);
-      setNotificationList(newFilterList);
-      setTotalNotifications(newFilterList.length);
-    }
+        return item.Notification.toLowerCase().indexOf(queryParams.NotificationNumber) > -1 
+        
+      })
+      console.log("printing queryParams.NotificationNumber ",notificationNumber)
+
+      if (search1 === undefined && notificationNumber.length > 0 &&  response) {
+          console.log("inside if condition ")
+        console.log("printing newFilterList ", newFilterList);
+        setNotificationList(newFilterList);
+        setTotalNotifications(newFilterList.length);
+      }
+      else if(search1 !== undefined && notificationNumber.length === 0 && response ) {
+        console.log("inside else if condition ")
+        console.log("printing newList ", newList);
+        setNotificationList(newList);
+        setTotalNotifications(newList.length);
+      }
+      else{
+        console.log("inside else condition ")
+        setNotificationList( response);
+        setTotalNotifications(response.length);
+      }
   };
 
   const paginationOnAdvanceFilter = () => {
@@ -344,141 +403,34 @@ export const NotificationsList = () => {
     );
   };
 
-  const deleteModel = async (clickedItem) => {
-    try {
-      if (clickedItem.props.children.match("Close")) {
-        await setisDeleteModal(true);
-      }
-      if (
-        clickedItem.props.children.match("Display/Change") ||
-        clickedItem.props.children.match("Display")
-      ) {
-        setUpdateModel(true);
-        const editiData1 = notificationList.filter((n) => {
-          return n.Id === currentRow;
-        });
-        const editiData = editiData1.map((Item) => {
-          return { ...Item, Id: currentRow };
-        });
-        setEditValues(editiData);
-      }
-      if (clickedItem.props.children.match("Reprocess")) {
-        await setIsReprocess(true);
-        const reprocess = notificationList.filter((n) => {
-          return n.Id === currentRow;
-        });
-        setEquipment(reprocess);
-        console.log("Reprocess");
-      }
-    } catch (err) {}
-  };
-
-  const deleteNotification = async () => {
-    let id = currentRow && currentRow;
-
-    if (id) {
-      try {
-        setIsLoading(true);
-        const response = await ctx.HttpDelete("/notification", { id });
-        if (response) {
-          setIsLoading(false);
-          setisDeleteModal(false);
-          setIsReprocess(false);
-          setNotificationPayload(response);
-          if (updateStatus === 1) {
-            seupdateStatus(0);
-          } else {
-            seupdateStatus(1);
-          }
-          setIsSuccessModalDelete(true);
-        } else {
-          setIsLoading(false);
-          setNotificationPayload(null);
-          setIsSuccessModalDelete(true);
-        }
-      } catch (err) {}
-    } else {
-      // setNotificationPayload(null);
-      setisDeleteModal(false);
-    }
-  };
-
-  const reprocessNotification = async () => {
-    let id = currentRow && currentRow;
-
-    if (id) {
-      try {
-        setIsLoading(true);
-        setIsReprocess(false);
-      } catch (err) {}
-    } else {
-      // setNotificationPayload(null);
-      setIsReprocess(false);
-    }
-  };
-
   const priorityObject = {
     1: <span className="opacity-border-red">High (X)</span>,
     2: <span className="opacity-border-orange">Medium</span>,
     3: <span className="opacity-border-green">Low</span>,
   };
   const syncStatusObj = {
-    0: <span className=" status-border-process ">Created</span>,
-    1: <span className=" status-border-process ">Sent</span>,
-    2: <span className=" status-border-process ">Pending</span>,
-    3: <span className=" status-border-success ">Processed</span>,
-    4: <span className="status-border-failed">Error</span>,
+    3: <span className="status-border-failed">Failed</span>,
+    1: <span className=" status-border-process ">In process</span>,
+    2: <span className=" status-border-success ">Success</span>,
   };
-
   const columns = [
     {
-      title: "Notification",
-      dataIndex: "DocumentNo",
-      key: "DocumentNo",
+      title: "Equipment",
+      dataIndex: "EquipmentNo",
+      key: "EquipmentNo",
       type: DataTypes.CUSTOM,
       width: "9vw",
       fixed: "left",
       sorter: true,
     },
-    // {
-    //   title: "Assigned to W/O",
-    //   dataIndex: "ParentId",
-    //   type: DataTypes.CUSTOM,
-    //   width: "7vw",
-    //   fixed: "left",
-    //   sorter: true,
-    //   render: (text, record) => {
-    //     if (record.ParentId) {
-    //       return (
-    //         <div className="text-dash-green-dark">
-    //           <CheckOutlined />
-    //         </div>
-    //       );
-    //     } else {
-    //       return (
-    //         <div className="text-punch">
-    //           <CloseOutlined />
-    //         </div>
-    //       );
-    //     }
-    //   },
-    // },
     {
-      title: "Sync Status",
-      dataIndex: "SyncCode",
-      key: "SyncCode",
+      title: "Notification",
+      dataIndex: "Notification",
+      key: "Notification",
       type: DataTypes.CUSTOM,
-      width: "8vw",
+      width: "9vw",
+      fixed: "left",
       sorter: true,
-      render: (text, record) => {
-        return (
-          <div className="flex">
-            <Tooltip placement="topLeft" title={record.SyncText}>
-              {record.SyncCode ? syncStatusObj[record.SyncCode] : "-"}
-            </Tooltip>
-          </div>
-        );
-      },
     },
     {
       title: "Type",
@@ -503,33 +455,22 @@ export const NotificationsList = () => {
       },
     },
     {
-      title: "Tech Status",
-      dataIndex: "TechStatus",
-      key: "TechStatusName",
+      title: "Description",
+      dataIndex: "Description",
+      key: "Description",
       type: DataTypes.CUSTOM,
-      width: "8vw",
-      sorter: true,
-      render: (text, record) => {
-        return (
-          <div className="flex">
-            {record.TechStatusIcon ? (
-              <Tooltip placement="topLeft" title={record.TechStatusName}>
-                <img
-                  src={`/images/icons/api-notifications-icon-${record.TechStatusIcon}.svg`}
-                  className="w-1/6 mr-2"
-                  alt={record.TechStatusIcon}
-                />
-              </Tooltip>
-            ) : (
-              "-"
-            )}
-            <span>{record.TechStatusIcon}</span>
-          </div>
-        );
-      },
+      width: "10vw",
     },
     {
-      title: "Create Date",
+      title: "Main Work CTR",
+      dataIndex: "ModelNo",
+      key: "ModelNo",
+      type: DataTypes.CUSTOM,
+      width: "8vw",
+      sorter: false,
+    },
+    {
+      title: "Notif. Date",
       dataIndex: "CreatedOn",
       key: "CreatedOn",
       type: DataTypes.DATE,
@@ -537,89 +478,23 @@ export const NotificationsList = () => {
       sorter: false,
     },
     {
-      title: "Priority",
-      dataIndex: "Priority",
-      key: "PriorityName",
+      title: "INSP No.",
+      dataIndex: "TechStatus",
+      key: "TechStatus",
       type: DataTypes.CUSTOM,
       width: "8vw",
       sorter: true,
-      render: (text, record) => priorityObject[record.Priority],
     },
     {
-      title: "Description",
-      dataIndex: "Description",
-      key: "Description",
-      type: DataTypes.CUSTOM,
-      width: "8vw",
-    },
-    {
-      title: "Admin No",
-      dataIndex: "AdminNo",
-      key: "AdminNo",
-      width: "10vw",
-      type: DataTypes.CUSTOM,
-      sorter: true,
-    },
-    {
-      title: "Work Order",
+      title: "Order",
       dataIndex: "WorkOrderNo",
       key: "WorkOrderNo",
       type: DataTypes.CUSTOM,
-      width: "7vw",
-      return: () => " ",
+      width: "8vw",
+      sorter: true,
     },
   ];
 
-  // let actionButtonItems = accessObject.includes("DeleteNotification")
-  //   ? [
-  //       <span className="p-2">
-  //         {accessObject.includes("PutNotification")
-  //           ? "Display/Change"
-  //           : "Display"}
-  //       </span>,
-  //       <span className="p-2">Close</span>,
-  //       <span className="p-2">Reprocess</span>,
-  //     ]
-  //   : [
-  //       <span className="p-2">
-  //         {accessObject.includes("PutNotification")
-  //           ? "Display/Change"
-  //           : "Display"}
-  //       </span>,
-  //       <span className="p-2">Reprocess</span>,
-  //     ];
-
-  const handleNotificationUpdate = async (payload) => {
-    if (notificationPayload) {
-      setIsLoading(true);
-      try {
-        const response = await ctx.HttpPut(
-          "/Notification",
-          notificationPayload
-        );
-        if (response) {
-          setIsLoading(false);
-          //setUpdateModel(false);
-          setUpdateNotificationModel(false);
-          setNotificationPayload(response);
-          setIsSuccessModalUpdate(true);
-          if (updateStatus === 1) {
-            seupdateStatus(0);
-          } else {
-            seupdateStatus(1);
-          }
-        } else {
-          setIsLoading(false);
-          setUpdateModel(false);
-          setUpdateNotificationModel(false);
-          setNotificationPayload(null);
-        }
-      } catch (err) {}
-    } else {
-      setNotificationPayload(payload);
-      setUpdateModel(true);
-    }
-  };
   const clearFilter = () => {
     setIsFilterModalVisible(false);
     setAdvanceFilterData("");
@@ -635,22 +510,76 @@ export const NotificationsList = () => {
     //setPage(1);
   };
 
-  const showFilterPopup = () => {
-    setIsFilterModalVisible(!isFilterModalVisible);
-    setSortFilterStatus(!sortfilterStatus);
-    console.log("inside showFilterPopup through layout");
-    console.log("inside showfilterPopup ", advanceFilterData);
-    return (
-      <NotificationSearch
-        advanceFilterData={advanceFilterData}
-      ></NotificationSearch>
-    );
+  const notificationtypelist = [
+    {
+      Id: "CE",
+      Value: "CE-Controlled Exchange",
+    },
+    {
+      Id: "M1",
+      Value: "M1-Maintenance Request",
+    },
+    {
+      Id: "ML",
+      Value: "ML-MEL-MaintExpLimit",
+    },
+    {
+      Id: "MW",
+      Value: "MW-MWO Modification WO",
+    },
+    {
+      Id: "O1",
+      Value: "O1-Oil Sample Request",
+    },
+    {
+      Id: "O2",
+      Value: "O2-Oil Sample Action",
+    },
+    {
+      Id: "PM",
+      Value: "PM-Preventive Maint Due",
+    },
+    {
+      Id: "Z1",
+      Value: "Z1-copy w/ref",
+    },
+  ];
+  const getNotificationsType = async () => {
+    if (notificationTypeList.length) return notificationTypeList;
+
+    const response = notificationtypelist;
+    if (response) {
+      console.log(response);
+      setNotificationTypeList(response);
+      return response;
+    }
   };
 
-  const toggleHelp = () => {
-    setShowHelpModal(!showHelpModal);
-    return showHelpModal;
-  };
+  const notificationsInputs = [
+    {
+      label: "Notification No.",
+      variable: "notificationNumber",
+      type: "customInput",
+    },
+    {
+      label: "Material",
+      variable: "material",
+      type: "customInput",
+    },
+    {
+      label: "Notification Type",
+      variable: "searchNotificationType",
+      type: "selectDropDown",
+      dropDownOptions: !notificationTypeList.length
+        ? getNotificationsType()
+        : notificationTypeList,
+    },
+    {
+      label: "Date range",
+      variable: "dateRange",
+      type: "dateRange",
+    },
+  ];
 
   let history = useNavigate();
 
@@ -663,46 +592,62 @@ export const NotificationsList = () => {
     }
   }, []);
 
+  const showFilterPopup = () => {
+    setIsFilterModalVisible(!isFilterModalVisible);
+    return (
+      <WorkInProcessSearch
+        advanceFilterData={advanceFilterData}
+      ></WorkInProcessSearch>
+    );
+  };
+
   return (
-    <Layout
-      page="notifications"
-      title="Notifications"
-      subTitle="Manage notifications here"
-      pageTitleButton={true}
-      buttonLabel={"Create Notification"}
-      //   pageTitleButtonDisabled={!accessObject.includes("PostNotification")}
-      searchPlaceholder="Search by Number, Type, or Material"
-      showSearch={true}
-      onSearchChange={(value) => {
-        setSearchValue(value);
-        getNotificationList(value);
-        console.log("search value setting in getNotificationList ", value);
-      }}
-      buttonIcon={
-        <PlusOutlined style={{ color: "#4E2C90" }} className="flex m-auto" />
-      }
-      showFilter={true}
-      onFilterClick={showFilterPopup}
-      buttonOnClick={() => setIsModalVisible(true)}
-      showHelp={true}
-      helpText={"Help"}
-      helpIcon={<QuestionCircleOutlined />}
-    >
+    <>
+      <div className="flex items-center mb-4">
+        <div style={searchIcon}>
+          <div className="flex custom-search">
+            <SearchBox
+              placeholder={"Search"}
+              searchOnModule={"Material"}
+              onChange={(value) => {
+                setSearchValue(value);
+                getNotificationList();
+              }}
+              className="border border-red-800"
+            />
+          </div>
+        </div>
+
+        <div className="my-auto">
+          <Button
+            className="pl-2"
+            onClick={(value) => {
+              showFilterPopup(value);
+            }}
+            type="link"
+          >
+            <div className="flex">
+              <img src={"/images/icons/filter.svg"} alt="filter" />
+              <span className="text-h1 font-medium text-regent-gray ml-2">
+                Filter
+              </span>
+            </div>
+          </Button>
+        </div>
+      </div>
       <DataTable
         columns={columns}
         dataSource={notificationList}
-        showActionButton={true}
-        onActionButtonClick={(record) => {
-          setCurrentRow(record.Id);
-        }}
-        actionButtonItemClick={(clickedItem) => deleteModel(clickedItem)}
-        actionButtonItems={notificationList}
-        pagination={true}
+        showActionButton={false}
+        rowKey={"Id"}
+        showViewMoreExpandable={true}
+        expandIconColumnIndex={8}
+        expandableView={NotificationsExpandableView}
+        pagination={false}
         totalRecords={totalNotifications}
         Checkbox={Checkbox}
         pageSize={pageSize}
         currentPage={page}
-        rowKey={"Id"}
         onChange={(pageSizeOptions, filterOptions, sorterOptions) => {
           let sortOrderValue = "";
           if (sorterOptions && sorterOptions.order) {
@@ -722,43 +667,24 @@ export const NotificationsList = () => {
           );
         }}
       />
-
       {isFilterModalVisible && (
         <SideDrawer
           showModal={true}
           isFooterVisible={null}
           wrapperClassName=" custom-modal left-search-bar custom-width-modal animate-right"
-          hideCancel={true}
           hideCui={true}
+          hideCancel={true}
         >
-          <NotificationSearch
+          <WorkInProcessSearch
             advanceFilterData={advanceFilterData}
             handleClose={clearFilter}
             cancel={cancel}
             setIsFilterModalVisible={setIsFilterModalVisible}
-            getNotificationList={getNotificationList}
             setAdvanceFilterData={setAdvanceFilterData}
+            inputs={notificationsInputs}
           />
         </SideDrawer>
       )}
-
-      {isModalVisible && (
-        <SideDrawer
-          showModal={true}
-          title="Create Notification"
-          isFooterVisible={null}
-          wrapperClassName=" custom-modal left-search-bar layoutFix animate-right"
-          onClose={() => setIsModalVisible(false)}
-        >
-          <NotificationCreateFlow
-            onClose={() => {
-              setIsModalVisible(false);
-              getNotificationList();
-            }}
-            List={list}
-          />
-        </SideDrawer>
-      )}
-    </Layout>
+    </>
   );
 };

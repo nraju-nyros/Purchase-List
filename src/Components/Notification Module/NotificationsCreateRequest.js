@@ -333,7 +333,7 @@ export const NotificationsCreateRequest = ({
   const handlePostNotification = async () => {
     setIsLoading(true);
     let payload = { ...notificationPayload };
-    console.log("printing payload handlePostNotification", notificationPayload);
+    console.log("printing payload handlePostNotification", payload);
     if (
       payload.type === "PM" ||
       payload.type === "O1" ||
@@ -345,17 +345,18 @@ export const NotificationsCreateRequest = ({
     }
 
     try {
-      const response = payload.map((item,key)=> {return item})
+      // const response = payload.map((item,key)=> {return item})
+      // const response = payload
       console.log("printing payload in handlePostNotification ", payload);
-      if (response) {
+      if (true) {
         setIsLoading(false);
-        setNotificationPayload(response);
+        setNotificationPayload(notificationPayload.Type);
         // setNewNotificationId(response.Id);
         setIsConfirmModalVisible(false);
         setIsSuccessModalVisible(true);
       } else {
         setIsLoading(false);
-        console.log("printing error in handlePostNotification ", response);
+        // console.log("printing error in handlePostNotification ", response);
         setIsConfirmModalVisible(false);
         setNotificationPayload(null);
       }

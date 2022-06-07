@@ -33,6 +33,7 @@ import {
       if (Object.keys(selectedDevice).length) {
         setData(
           data.filter((item) => {
+            console.log("printing selectedDevice id ", selectedDevice);
             if (item.Id === selectedDevice.id) {
               item.isActive = true;
             }
@@ -46,13 +47,16 @@ import {
       setIsLoading(true);
       try {
         const res = List
-        let ch = List.filter((item) => item.Id === val)
-        console.log("printing ch ",ch)
+        let newResponse = res.filter((item) => 
+        { return item.AdminNo.indexOf(val) > -1 })
+        console.log("printing res inside  getQueryData ",res)
+        // console.log("printing val inside  getQueryData ",val)
         
-        if (res) {
+        if (newResponse) {
           setIsLoading(false);
-          res.forEach((element) => (element.isActive = false));
-          setData(res);
+          console.log("printing newResponse inside  getQueryData ",newResponse)
+          newResponse.forEach((element) => (element.isActive = false));
+          setData(newResponse);
           handleCheckedUser();
         }
       } catch (err) {
