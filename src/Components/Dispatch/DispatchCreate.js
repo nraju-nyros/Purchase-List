@@ -1,13 +1,14 @@
 import { Button, Col, Row, Steps } from "antd";
 import React, { useContext, useState, useEffect } from "react";
-import { DispatchEquipment } from '../Stepper Form/DispatchEquipment'
+import { DispatchEquipment } from "../Stepper Form/DispatchEquipment";
 // import { DispatchNotification } from '../Stepper Form/DispatchNotification'
 import { DispatchNotification1 } from "../Stepper Form/DispatchNotification1";
 import AddOperator from "../Stepper Form/AddOperator";
 import * as Yup from "yup";
 import { Form, FormikProvider, useFormik } from "formik";
 import { Wizard } from "../Wizard/Wizard";
-import {AppContext} from "../Context/AppContext"
+import { AppContext } from "../Context/AppContext";
+import { Layout } from "../Context/Layout";
 
 export const DispatchCreate = (props) => {
   const [current, setCurrent] = useState(0);
@@ -27,12 +28,11 @@ export const DispatchCreate = (props) => {
     setCurrent(current - 1);
   };
 
-
   const steps = [
     {
       title: "Select Equipment",
       content: (
-       <DispatchEquipment 
+        <DispatchEquipment
           current={current}
           handleNext={next}
           data={data}
@@ -42,46 +42,46 @@ export const DispatchCreate = (props) => {
           query={query}
           handleEquipmentSearch={(val) => setQuery(val)}
           setQuery={setQuery}
-          ctx={ctx}       
-       />
+          ctx={ctx}
+        />
       ),
     },
     {
       title: "Create Dispatch Notification",
       content: (
-        <DispatchNotification1 
-        handlePrev={prev}
-        handleNext={next}
-        handleClose={props.onClose}
-        value={selectedDevice}
-        selectedDevice={selectedDevice}
-        notificationPayload={notificationPayload}
-        setNotificationPayload={setNotificationPayload}  
-          />
+        <DispatchNotification1
+          handlePrev={prev}
+          handleNext={next}
+          handleClose={props.onClose}
+          value={selectedDevice}
+          selectedDevice={selectedDevice}
+          notificationPayload={notificationPayload}
+          setNotificationPayload={setNotificationPayload}
+        />
       ),
     },
     {
       title: "Add Operator",
       content: (
-        <AddOperator 
-        current={current}
-        handlePrev={prev}
-        handleClose={props.onClose}
-        setIsConfirmModalVisible={setIsConfirmModalVisible}
-        notificationPayload={notificationPayload}
-        setNotificationPayload={setNotificationPayload}
-        isConfirmModalVisible={isConfirmModalVisible}
-        operatorList={operatorList}
+        <AddOperator
+          current={current}
+          handlePrev={prev}
+          handleClose={props.onClose}
+          setIsConfirmModalVisible={setIsConfirmModalVisible}
+          notificationPayload={notificationPayload}
+          setNotificationPayload={setNotificationPayload}
+          isConfirmModalVisible={isConfirmModalVisible}
+          operatorList={operatorList}
         />
       ),
     },
   ];
   return (
-    <Wizard
-      steps={steps}
-      current={current}
-      className="step-width"
-      classes="wizard-header"
-    />
-  )
-}
+      <Wizard
+        steps={steps}
+        current={current}
+        className="step-width"
+        classes="wizard-header"
+      />
+  );
+};

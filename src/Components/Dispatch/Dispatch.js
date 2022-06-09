@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Table, Row, Col, Button, Input } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { SearchOutlined , QuestionCircleOutlined} from "@ant-design/icons";
 import "antd/dist/antd.css";
 import { Link, useHistory } from "react-router-dom";
 import { DispatchCreate } from "./DispatchCreate";
 import { useNavigate } from "react-router-dom";
-
+import { Layout } from "../Context/Layout";
 export const Dispatch = () => {
   let history = useNavigate();
     const coloumns = [
@@ -213,6 +213,11 @@ export const Dispatch = () => {
     setFilterSearch(result)
   }
   return (
+    <Layout
+        showHelp={true}
+        helpText={"Help"}
+        helpIcon={<QuestionCircleOutlined />}
+    >
     <div>
     <div>
       <Row>
@@ -233,7 +238,6 @@ export const Dispatch = () => {
           span={4}
           pull={16}
           style={{ textAlign: "left", margin: "20px 0 20px 10px" }}
-         
         >
           <h1 className="font-poppins leading-normal" style={{ color: "#8892A5", fontWeight: "400", fontSize: "21px" }}>
           Dispatch Notifications
@@ -271,5 +275,6 @@ export const Dispatch = () => {
       </Row>
     </div>
   </div>
+  </Layout>
   )
 }

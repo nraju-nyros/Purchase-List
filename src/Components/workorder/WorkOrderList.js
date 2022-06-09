@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Table, Row, Col, Button, Input, Tooltip } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { SearchOutlined , QuestionCircleOutlined} from "@ant-design/icons";
 import "antd/dist/antd.css";
 import { Link, useHistory } from "react-router-dom";
 import { DispatchCreate } from "../Dispatch/DispatchCreate";
@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { stripLeadingZeros } from "../Context/helpers";
 import {SideDrawer} from "../Wizard/SideDrawer";
 import WorkOrderCreateFlow from "./WorkOrderCreateFlow";
+import { Layout } from "../Context/Layout";
 export const WorkOrderList = () => {
   let history = useNavigate();
 
@@ -213,6 +214,12 @@ export const WorkOrderList = () => {
     setFilterSearch(result);
   };
   return (
+<Layout  
+ showHelp={true}
+ helpText={"Help"}
+ helpIcon={<QuestionCircleOutlined />}
+
+>
     <div>
       <div>
         <Row>
@@ -321,5 +328,6 @@ export const WorkOrderList = () => {
 
       </div>
     </div>
+    </Layout>
   );
 };

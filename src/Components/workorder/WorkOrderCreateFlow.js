@@ -7,6 +7,10 @@ import { useNavigate, useHistory} from "react-router-dom";
 import { NotificationsDeviceList } from "./NotificationsDeviceList";
 import { WorkOrderAddNotification } from "./WorkOrderAddNotification";
 import { WorkOrderAddHeader } from "./WorkOrderAddHeader";
+import { Layout } from "../Context/Layout";
+import {
+  QuestionCircleOutlined
+} from "@ant-design/icons";
 const WorkOrderCreateFlow = (props) => { 
     const history = useNavigate();
   const ctx = useContext(AppContext);
@@ -99,6 +103,7 @@ const WorkOrderCreateFlow = (props) => {
       setIsLoading(false);
     }
   };
+  const onClose=() => setIsModalVisible(false) // i have added this function extra,remember to delete it
 
   const selectedNotificationTechStatus = useMemo(() => {
     if (selectedNotification.length >= 1) {
@@ -154,6 +159,7 @@ const WorkOrderCreateFlow = (props) => {
           setSelectedRowKeys={setSelectedRowKeys}
           setNotifactionData={setNotifactionData}
           notifactionData={notifactionData}
+          
         />
         
       ),
@@ -172,7 +178,7 @@ const WorkOrderCreateFlow = (props) => {
           handlePrev={prev}
           selectedNotification={selectedNotificationTechStatus}
           handleSelectedNotification={(val) => setSelectedNotification(val)}
-          handleClose={props.onClose}
+          handleClose={onClose}
           selectedRowKeys={selectedRowKeys}
           setSelectedRowKeys={setSelectedRowKeys}
           isModalVisible={isModalVisible}
@@ -185,8 +191,16 @@ const WorkOrderCreateFlow = (props) => {
     },
   ];
 
-  return <Wizard steps={steps} current={current} classes="wizard-header" />;
-
+  return (
+    // <Layout 
+    // showHelp={true}
+    // helpText={"Help"}
+    // helpIcon={<QuestionCircleOutlined />}
+    // >
+      <Wizard steps={steps} current={current} classes="wizard-header" />
+    // </Layout>  
+    
+    );
 }
 
 export default WorkOrderCreateFlow;

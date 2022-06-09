@@ -654,7 +654,7 @@ export const SideBar = (props) => {
             "Control all your operations on a summarized, common interface"
           )}
   
-          {ctx.userInfo?.UserFeatures.map((item) => {
+          {/* {ctx.userInfo?.UserFeatures.map((item) => {
             if (item?.id !== "Api-Dashboard") {
               return renderMenuItem(
                 item.name,
@@ -668,8 +668,58 @@ export const SideBar = (props) => {
                 item.separate ? 1 : 0
               );
             }
-          })}
-  
+          })} */}
+
+            {renderMenuItem(
+            "Dispatch",
+            "checkouttools-icon",
+            "home/dispatch",
+            menuNameFor,
+            () => setMenuNameFor(null), //home - updated to null after menu changes
+            () => setMenuNameFor(null),
+            "Dispatch is enabled for all users"
+          )}
+
+            {renderMenuItem(
+            "Notifications",
+            "notifications-icon",
+            "home/notifications",
+            menuNameFor,
+            () => setMenuNameFor(null), //home - updated to null after menu changes
+            () => setMenuNameFor(null),
+            "Notification if for Admin Only"
+          )}
+
+            {renderMenuItem(
+            "Work Order",
+            "workOrders-icon",
+            "home/workorder",
+            menuNameFor,
+            () => setMenuNameFor(null), //home - updated to null after menu changes
+            () => setMenuNameFor(null),
+            "Work-Order is for Admin Only"
+            )}    
+
+            {renderMenuItem(
+            "Work In Process",
+            "purchasings-icon",
+            "home/workorderinprocess",
+            menuNameFor,
+            () => setMenuNameFor(null), //home - updated to null after menu changes
+            () => setMenuNameFor(null),
+            "Work In Process is for Client Only"
+            )}    
+
+            {renderMenuItem(
+            "Functional Location",
+            "locations-icon",
+            "home/functionallocation",
+            menuNameFor,
+            () => setMenuNameFor(null), //home - updated to null after menu changes
+            () => setMenuNameFor(null),
+            "Functional Location is for Client Only"
+            )}    
+
           {/* start of profile info */}
           <div
             id={profileMenuId}
@@ -699,9 +749,10 @@ export const SideBar = (props) => {
                 className="bg-no-repeat bg-center bg-contain"
                 style={{
                   backgroundImage: `url(${
-                    ctx?.userInfo?.Image
-                      ? "data:image/png;base64," + ctx?.userInfo?.Image
-                      : "/images/icons/api-admin-icon-menu.svg"
+                    // ctx?.userInfo?.Image
+                      // ? "data:image/png;base64," + ctx?.userInfo?.Image
+                      "data:image/png;base64," 
+                     
                   })`,
                   width: "20px",
                   height: "20px",
@@ -729,12 +780,12 @@ export const SideBar = (props) => {
                   style={{ color: "rgba(255, 255, 255, 0.9)" }}
                 >
                   <div className="text-h1 font-semibold">
-                    {ctx?.userInfo?.FullName}
+                    {/* {ctx?.userInfo?.FullName} */}
                   </div>
                   <div className="text-xs opacity-50 font-regular">
-                    {ctx?.userInfo?.UserID}
+                    {/* {ctx?.userInfo?.UserID} */}
                   </div>
-                  {ctx?.userInfo?.LastLogin ? (
+                  {/* {ctx?.userInfo?.LastLogin ? (
                     <>
                       <div className="text-h1 font-medium mt-3">
                         {FormatDateLocal(ctx?.userInfo?.LastLogin, null)}
@@ -745,7 +796,7 @@ export const SideBar = (props) => {
                     </>
                   ) : (
                     " "
-                  )}
+                  )} */}
                   <div
                     onClick={() => setShowLogoutModal(true)}
                     className="text-h1 font-medium mt-3 pt-3 mb-1 border-t-2 cursor-pointer"
@@ -828,9 +879,15 @@ export const SideBar = (props) => {
             </div>
   
             <div className="">
-              {renderDrawerMenuItem("Home", "home-icon", "home")}
-  
-              {ctx.userInfo?.UserFeatures.map((item) => {
+              {renderDrawerMenuItem("Home", "home-icon", "/")}<br/>
+              {renderDrawerMenuItem("Dispatch", "checkouttools-icon", "home/dispatch")}
+              {renderDrawerMenuItem("Notification", "notifications-icon", "home/notifications")}
+              {renderDrawerMenuItem("Work Order", "workOrders-icon", "home/workorder")}
+              {/* {renderDrawerMenuItem("Create Purchase", "purchasings-icon", "home/createpurchase")} */}
+              {renderDrawerMenuItem("Work In Process", "purchasings-icon", "home/workorderinprocess")}
+              {renderDrawerMenuItem("Functional Location", "locations-icon", "home/functionallocation")}
+              
+              {/* {ctx.userInfo?.UserFeatures.map((item) => {
                 return renderDrawerMenuItem(
                   item.name,
                   item.icon,
@@ -838,7 +895,7 @@ export const SideBar = (props) => {
                   item.submenu,
                   item.separate ? 1 : 0
                 );
-              })}
+              })} */}
             </div>
   
             <div
@@ -854,9 +911,9 @@ export const SideBar = (props) => {
                   className="my-auto bg-no-repeat bg-center bg-cover"
                   style={{
                     backgroundImage: `url(${
-                      ctx?.userInfo?.Image
-                        ? "data:image/png;base64," + ctx?.userInfo?.Image
-                        : "/images/icons/api-admin-icon-menu.svg"
+                    
+                         "data:image/png;base64," 
+                        
                     })`,
                     width: "20px",
                     height: "20px",
@@ -867,7 +924,7 @@ export const SideBar = (props) => {
                     showDropdownMenuFor.includes("Profile") ? "opacity-50" : ""
                   }`}
                 >
-                  {ctx?.userInfo?.FullName}
+                  {/* {ctx?.userInfo?.FullName} */}
                 </div>
                 <button
                   size="small"
@@ -906,12 +963,12 @@ export const SideBar = (props) => {
                           className="text-xs opacity-50 font-regular whitespace-nowrap	overflow-hidden overflow-ellipsis"
                           style={{ width: "157px" }}
                         >
-                          {ctx?.userInfo?.UserID}
+                          {/* {ctx?.userInfo?.UserID} */}
                         </div>
                       </div>
                     </div>
                     <div className="text-h1 font-medium mt-3">
-                      {FormatDateLocal(ctx?.userInfo?.LastLogin, null)}
+                      {/* {FormatDateLocal(ctx?.userInfo?.LastLogin, null)} */}
                     </div>
                     <div className="text-h1 font-medium opacity-50">
                       Last Login

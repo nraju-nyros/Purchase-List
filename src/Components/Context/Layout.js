@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
 import { Row, Col, Button, Select } from "antd";
-// import { SideBar } from "../Wizard/SideBar";
+import { SideBar } from "../Wizard/SideBar";
 import { AppContext } from "./AppContext";
 import { SearchBox } from "../SearchBox";
 import {PageTitleBox} from './PageTtitleBox'
@@ -87,18 +87,16 @@ export const Layout = (props) => {
           style={{ overflow: "hidden" }}
         >
           <Col className="bg-athens-gray">
-            {/* <SideBar page={page} /> */}
+            <SideBar page={page} />
           </Col>
           <Col style={{width: `${helpToggle ? (100 - helpWidth) : 100}%`}} className="bg-athens-gray">
-            {/* {ctx.pageInfo?.HomeTitle ? (
+            { 
               <Row style={{ backgroundColor: "green", color: "white" }}>
                 <div className="text-center w-full">
-                  {ctx.pageInfo?.HomeTitle}
+                  CONTROLLED UNCLASSIFIED iNFORMATION (CUI)
                 </div>
-              </Row>
-            ) : (
-              ""
-            )} */}
+              </Row>  
+            }
             <Row type="flex" className="pt-5 pt-1 px-2 pb-2">
               <Col span={1} />
               <Col span={23} className="pr-4 px-7">
