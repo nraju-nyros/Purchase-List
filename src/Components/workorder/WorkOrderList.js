@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Table, Row, Col, Button, Input, Tooltip } from "antd";
 import { SearchOutlined , QuestionCircleOutlined} from "@ant-design/icons";
 import "antd/dist/antd.css";
@@ -32,7 +32,8 @@ export const WorkOrderList = () => {
     3: <span className=" status-border-success ">Processed</span>,
     4: <span className="status-border-failed">Error</span>,
   };
-
+  const [data , setData ] = useState([]);
+  
   const coloumns = [
     {
       title: "Work Order No.",
@@ -115,86 +116,20 @@ export const WorkOrderList = () => {
       },
     },
   ];
-
-  const data = [
-    {
-      key: 1,
-      DocumentNo: "AG00100",
-      AdminNo: "AD00900",
-      Description: "desc101",
-      Notification: "notif 002",
-      TechStatusName: "pending",
-      EquipmentNumber: "EQ00100",
-      SerialNo: "02",
-      SyncCode: "waiting",
-    },
-    {
-      key: 2,
-      DocumentNo: "AG00109",
-      AdminNo: "AD00901",
-      Description: "desc121",
-      Notification: "notif 010",
-      TechStatusName: "aprooved",
-      EquipmentNumber: "EQ00153",
-      SerialNo: "01",
-      SyncCode: "approved",
-    },
-    {
-      key: 3,
-      DocumentNo: "AG00139",
-      AdminNo: "AD00938",
-      Description: "desc101",
-      Notification: "notif 002",
-      TechStatusName: "pending",
-      EquipmentNumber: "EQ00100",
-      SerialNo: "01",
-      SyncCode: "approved",
-    },
-    {
-      key: 4,
-      DocumentNo: "AG00216",
-      AdminNo: "AD00763",
-      Description: "desc244",
-      Notification: "notif 209",
-      TechStatusName: "aprooved",
-      EquipmentNumber: "EQ00287",
-      SerialNo: "01",
-      SyncCode: "approved",
-    },
-    {
-      key: 5,
-      DocumentNo: "AG00236",
-      AdminNo: "AD00712",
-      Description: "desc237",
-      Notification: "notif 269",
-      TechStatusName: "pending",
-      EquipmentNumber: "EQ00258",
-      SerialNo: "02",
-      SyncCode: "pending",
-    },
-    {
-      key: 6,
-      DocumentNo: "AG00583",
-      AdminNo: "AD00478",
-      Description: "desc004",
-      Notification: "notif 562",
-      TechStatusName: "approved",
-      EquipmentNumber: "EQ00012",
-      SerialNo: "01",
-      SyncCode: "approved",
-    },
-    {
-      key: 7,
-      DocumentNo: "AG00547",
-      AdminNo: "AD00493",
-      Description: "desc087",
-      Notification: "notif 523",
-      TechStatusName: "pending",
-      EquipmentNumber: "EQ00411",
-      SerialNo: "02",
-      SyncCode: "pending",
-    },
-  ];
+useEffect(() => {
+  const response = fetch( "https://62a17273cd2e8da9b0f16c3e.mockapi.io/search/note")
+  .then((res) => res.json())
+  .then((resp) => {
+      setData(resp[0].Data)
+      setSearchList(resp[0].Data)
+      setFilterSearch(resp[0].Data)
+      console.log("printing resp ", resp[0].Data)
+  });
+}
+, [])
+ 
+console.log("printing data ", data)
+  
   const [updateNotificationModel, setUpdateNotificationModel] = useState(false);
   const [searchList, setSearchList] = useState(data);
   const [filterSearch, setFilterSearch] = useState([]);
@@ -262,6 +197,7 @@ export const WorkOrderList = () => {
           <Col span={6}>
             {/* <Col span={6} style={{ textAlign: "left", margin: "0 0 20px 10px" }}> */}
             <Input
+              id="searching"
               type="search"
               placeholder="Search document no"
               className="font-poppins font-medium text-xs rounded-lg leading-normal"

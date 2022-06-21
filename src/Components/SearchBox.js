@@ -25,6 +25,7 @@ export const SearchBox = (props) => {
 
   return (
     <Input
+      id="searching"
       ref={inputRef}
       type="search"
       size="large"

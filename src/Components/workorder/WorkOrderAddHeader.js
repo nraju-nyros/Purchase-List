@@ -23,7 +23,7 @@ export const WorkOrderAddHeader = ({
   const ctx = useContext(AppContext);
   const history = useNavigate();
   let location = useLocation();
-
+  const [tempValues, setTempValues] = useState(0);
   const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
   const [workorderPayload, setWorkOrderPayload] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -35,16 +35,16 @@ export const WorkOrderAddHeader = ({
   const initialValues = {
     modelName: "",
     modelData: "",
-    id: value?.Id,
-    orgCode: value?.OrgCode,
+    id: "",
+    orgCode: "",
     documentNo: "",
     workOrderType: workOrderTypeFromNotification || "",
-    equipmentNumber: value.EquipmentNo,
+    equipmentNumber: "",
     description: "",
-    workCenter: value.OrgCode,
+    workCenter: "",
     commit: "",
     plant: "",
-    storageLocation: value.StorageLoc,
+    storageLocation: "",
     systemCondition: "",
     projectCode: "",
     cfc: "",
@@ -303,22 +303,22 @@ export const WorkOrderAddHeader = ({
 
   // TODO: this should all go away once API enforces these rules
 
-  useEffect(() => {
-    if (
-      selectedNotification.techStatus &&
-      (selectedNotification.techStatus.includes("CX") ||
-        selectedNotification.techStatus.includes("X"))
-    ) {
-      setRestrictOrderPriorities(true);
-    }
-    if (selectedNotification.notificationType) {
-      if (selectedNotification.notificationType === "M1") {
-        setWorkOrderTypeFromNotification("PM01");
-      } else if (selectedNotification.notificationType === "PM") {
-        setWorkOrderTypeFromNotification("PM02");
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (
+  //     selectedNotification.techStatus &&
+  //     (selectedNotification.techStatus.includes("CX") ||
+  //       selectedNotification.techStatus.includes("X"))
+  //   ) {
+  //     setRestrictOrderPriorities(true);
+  //   }
+  //   if (selectedNotification.notificationType) {
+  //     if (selectedNotification.notificationType === "M1") {
+  //       setWorkOrderTypeFromNotification("PM01");
+  //     } else if (selectedNotification.notificationType === "PM") {
+  //       setWorkOrderTypeFromNotification("PM02");
+  //     }
+  //   }
+  // }, []);
   // TODO: this should all go away once API enforces these rules
 
   return (
@@ -338,6 +338,7 @@ export const WorkOrderAddHeader = ({
                     <Col span={24}>
                       <div className="mt-4 mb1   input_text_color ">
                         <CustomTextarea
+                          id="workOrderDescription"
                           rows={4}
                           label="Description"
                           inputValue={values.description}

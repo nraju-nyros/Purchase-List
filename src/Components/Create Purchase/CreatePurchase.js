@@ -14,6 +14,7 @@ import { Button, Card, Col, Row } from "antd";
 import "./Purchase.css";
 import "../../App.css"
 import {Link , useHistory } from 'react-router-dom'
+import { Layout } from "../Context/Layout";
 
 export const CreatePurchase = () => {
   const validationSchema = yup.object().shape({
@@ -66,7 +67,9 @@ export const CreatePurchase = () => {
 
   return (
     <div>
-      <FormikProvider value={formik}>
+      <Layout>
+          
+        <FormikProvider value={formik}>
         <Form
           autoComplete="off"
           noValidate
@@ -334,6 +337,7 @@ export const CreatePurchase = () => {
           </Row>
         </Form>
       </FormikProvider>
+      </Layout>   
     </div>
   );
 };

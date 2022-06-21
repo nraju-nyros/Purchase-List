@@ -83,6 +83,7 @@ const WorkOrderCreateFlow = (props) => {
       limit: limit,
     };
     const response = await ctx.HttpGetList("/notification/list", queryParams);
+    console.log("response of workordercreateflow ", response);
     if (response) {
       setDeviceList(response.Data);
     }

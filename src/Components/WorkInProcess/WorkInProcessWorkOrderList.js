@@ -48,6 +48,7 @@ export const WorkInProcessWorkOrderList = () => {
 
   const [page, setPage] = useState(1);
   const [sortfilterStatus, setSortFilterStatus] = useState(false);
+  const [newList , setNewList] = useState([]);
   const [advanceFilterData, setAdvanceFilterData] = useState({
     workOrderNumber: "",
     material: "",
@@ -297,35 +298,35 @@ export const WorkInProcessWorkOrderList = () => {
     },
   ];
   const workordertypelist = [
-      {
-        Id: "CE",
-        Value: "CE-Controlled Exchange"
-      },
-      {
-        Id: "M1",
-        Value: "M1-Maintenance Request"
-      },
-      {
-        Id: "ML",
-        Value: "ML-MEL-MaintExpLimit"
-      },
-      {
-        Id: "O1",
-        Value: "O1-Oil Sample Request"
-      },
-      {
-        Id: "O2",
-        Value: "O2-Oil Sample Action"
-      },
-      {
-        Id: "PM",
-        Value: "PM-Preventive Maint Due"
-      },
-      {
-        Id: "Z1",
-        Value: "Z1-copy w/ref"
-      },
-  ]
+    {
+      Id: "CE",
+      Value: "CE-Controlled Exchange",
+    },
+    {
+      Id: "M1",
+      Value: "M1-Maintenance Request",
+    },
+    {
+      Id: "ML",
+      Value: "ML-MEL-MaintExpLimit",
+    },
+    {
+      Id: "O1",
+      Value: "O1-Oil Sample Request",
+    },
+    {
+      Id: "O2",
+      Value: "O2-Oil Sample Action",
+    },
+    {
+      Id: "PM",
+      Value: "PM-Preventive Maint Due",
+    },
+    {
+      Id: "Z1",
+      Value: "Z1-copy w/ref",
+    },
+  ];
 
   const getWorkOrderList = async (
     searchBy = searchValue,
@@ -351,37 +352,30 @@ export const WorkInProcessWorkOrderList = () => {
       StartDate: `${advanceFilterData?.date && advanceFilterData.date[0]}`,
       EndDate: `${advanceFilterData?.date && advanceFilterData.date[1]}`,
     };
-    const response = list
-    console.log ("printing response inside workOrderList ", response)
+    fetch("https://62a17273cd2e8da9b0f16c3e.mockapi.io/search/notify")
+    .then(res => res.json())
+    .then(data => { 
+      setNewList(data);
+      // setWorkOrderList(data);
+      // setTotalWorkOrders(data.length);
+      console.log("printing api data in getWorkOrderList", data);
+    })
 
-    if(response){
-        setWorkOrderList(response);
-        setTotalWorkOrders(response.length);
+    var newData = newList.filter((item) => {
+      return item.DocumentNo.indexOf(search1) > -1;
+    })
+   
+    if(search1 !== undefined &&  newList){
+      setWorkOrderList(newData);
+      setTotalWorkOrders(newData.length);
     }
-//     var newList = response.filter((item)=>{
-//         return item.DocumentNo.toLowerCase().indexOf(search1) > -1;
-//       })
-//       var newFilterList = response.filter((item)=>{
-//         return item.DocumentNo.toLowerCase().indexOf(queryParams.WorkOrderNumber) > -1 
-//         && item.Type.indexOf(queryParams.Material) > -1;
-//       })
+    else{
+      console.log("inside else condition ")
+      setWorkOrderList(newList);
+      setTotalWorkOrders(newList.length);
+    }
 
-//       if (search1 === undefined && queryParams.NotificationNumber === undefined &&  response) {
-//       setWorkOrderList(response);
-//       setTotalWorkOrders(response.length);
-//     }
-//     else if(search1 !== undefined && queryParams.NotificationNumber === undefined && response ) {
-//         console.log("printing newList ", newList);
-//         setWorkOrderList(newList);
-//         setTotalWorkOrders(newList.length);
-//     }
-//     else{
-//         console.log("printing newFilterList ", newFilterList);
-//         setWorkOrderList(newFilterList);
-//         setTotalWorkOrders(newFilterList.length);
-//     }
-//   };
-  }
+  };
 
   const paginationOnAdvanceFilter = () => {
     var filterStatus = false;
@@ -696,9 +690,9 @@ export const WorkInProcessWorkOrderList = () => {
   const getWorkOrderType = async () => {
     if (workOrderTypeList.length) return workOrderTypeList;
 
-    const response = workordertypelist
+    const response = workordertypelist;
     if (response) {
-      console.log("printing response inside getWorkOrderType ",response);
+      console.log("printing response inside getWorkOrderType ", response);
       setWorkOrderTypeList(response);
       return response;
     }

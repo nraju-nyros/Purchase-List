@@ -8,6 +8,9 @@ import * as Yup from "yup";
 import { Form, FormikProvider, useFormik } from "formik";
 import { Wizard } from "../Wizard/Wizard";
 import { AppContext } from "../Context/AppContext";
+import {
+  QuestionCircleOutlined
+} from "@ant-design/icons";
 import { Layout } from "../Context/Layout";
 
 export const DispatchCreate = (props) => {
@@ -77,11 +80,18 @@ export const DispatchCreate = (props) => {
     },
   ];
   return (
-      <Wizard
+    <Layout 
+    showHelp={true}
+    helpText={"Help"}
+    helpIcon={<QuestionCircleOutlined />}
+    >
+        <Wizard
         steps={steps}
         current={current}
         className="step-width"
         classes="wizard-header"
       />
+    </Layout>
+    
   );
 };

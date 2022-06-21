@@ -16,7 +16,7 @@ import { CustomModal } from "./CustomModal";
 import { SetFeaturesUrl } from "./app-feature";
 var screen;
 
-export const AppContext = createContext();
+export const AppContext = createContext({});
 
 export const AppProvider = ({ children }) => {
   const IssuerTypes = {

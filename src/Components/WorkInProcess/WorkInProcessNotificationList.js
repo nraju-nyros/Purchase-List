@@ -18,7 +18,7 @@ export const WorkInProcessNotificationList = () => {
     backgroundPosition: "center left",
     backgroundRepeat: "no-repeat",
   };
-
+  // console.log(AppContext);
   const [notificationList, setNotificationList] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -39,6 +39,7 @@ export const WorkInProcessNotificationList = () => {
   const [notificationTypeList, setNotificationTypeList] = useState([]);
   const [page, setPage] = useState(1);
   const [sortfilterStatus, setSortFilterStatus] = useState(false);
+  const [newList, setNewList] = useState([]);
   const [advanceFilterData, setAdvanceFilterData] = useState({
     notificationNumber: "",
     material: "",
@@ -55,7 +56,7 @@ export const WorkInProcessNotificationList = () => {
   let notificationType = advanceFilterData?.searchNotificationType;
   let startDate = advanceFilterData?.date && advanceFilterData.date[0];
   let endDate = advanceFilterData?.date && advanceFilterData.date[1];
-  var search1 = searchValue && searchValue;
+  var search1 = searchValue ? searchValue : null;
 
   useEffect(() => {
     if (isFilterModalVisible === true) {
@@ -299,7 +300,7 @@ export const WorkInProcessNotificationList = () => {
       limit: limit,
       UseAdvancedFilter: true,
       IncludeCompletedNotifications: true,
-      NotificationNumber: advanceFilterData?.notificationNumber,
+      NotificationNumber: advanceFilterData?.notificationNumber ? advanceFilterData.notificationNumber : null,
       Material: advanceFilterData?.material,
       NotificationType: advanceFilterData?.searchNotificationType,
       Last90Days: advanceFilterData?.dateRange,
@@ -308,35 +309,60 @@ export const WorkInProcessNotificationList = () => {
       }`,
       EndDate: `${advanceFilterData?.endDate && advanceFilterData.endDate}`,
     };
-    const response = list;
-    console.log("printing response in getNotificationList", response);
-    console.log("printing search1 inside getNotificationList ",search1)
-    var newList = response.filter((item) => {
-      return item.Notification.indexOf(search1) > -1;
-    });
+    // const response = list;
+    // console.log("printing response in getNotificationList", response);
+    // console.log("printing search1 inside getNotificationList ",search1)
+    // var newList = response.filter((item) => {
+    //   return item.Notification.indexOf(search1) > -1;
+    // });
 
-    var newFilterList = response.filter((item)=>{
-        return item.Notification.toLowerCase().indexOf(queryParams.NotificationNumber) > -1 
-        
+    // var newFilterList = response.filter((item)=>{
+    //     return item.Notification.toLowerCase().indexOf(queryParams.NotificationNumber) > -1
+
+    //   })
+    //   console.log("printing queryParams.NotificationNumber ",notificationNumber)
+
+    //   if (search1 === undefined && notificationNumber.length > 0 &&  response) {
+    //       console.log("inside if condition ")
+    //     console.log("printing newFilterList ", newFilterList);
+    //     setNotificationList(newFilterList);
+    //     setTotalNotifications(newFilterList.length);
+    //   }
+    //   else if(search1 !== undefined && notificationNumber.length === 0 && response ) {
+    //     console.log("inside else if condition ")
+    //     console.log("printing newList ", newList);
+    //     setNotificationList(newList);
+    //     setTotalNotifications(newList.length);
+    //   }
+    //   else{
+    //     console.log("inside else condition ")
+    //     setNotificationList( response);
+    //     setTotalNotifications(response.length);
+    //   }
+
+    fetch( "https://62a17273cd2e8da9b0f16c3e.mockapi.io/search/notify")
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log("printing queryParams in getNotificationList ", queryParams);
+        console.log("printing api data in getNotificationList ", data);
+        setNewList(data);
+      });
+      console.log("printing newList in getNotificationList ", newList);
+
+      var newData = newList.filter((item) => {
+        return item.Notification.indexOf(search1) > -1;
       })
-      console.log("printing queryParams.NotificationNumber ",notificationNumber)
 
-      if (search1 === undefined && notificationNumber.length > 0 &&  response) {
-          console.log("inside if condition ")
-        console.log("printing newFilterList ", newFilterList);
-        setNotificationList(newFilterList);
-        setTotalNotifications(newFilterList.length);
-      }
-      else if(search1 !== undefined && notificationNumber.length === 0 && response ) {
-        console.log("inside else if condition ")
-        console.log("printing newList ", newList);
-        setNotificationList(newList);
-        setTotalNotifications(newList.length);
+      console.log("printing queryParams.search in getNotificationList ", search1);
+      if(search1 !== null && newList){
+        console.log("inside if condition ")
+        setNotificationList(newData);
+        setTotalNotifications(newData.length);
       }
       else{
         console.log("inside else condition ")
-        setNotificationList( response);
-        setTotalNotifications(response.length);
+        setNotificationList(newList);
+        setTotalNotifications(newList.length);
       }
   };
 

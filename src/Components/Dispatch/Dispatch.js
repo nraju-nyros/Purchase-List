@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Table, Row, Col, Button, Input } from "antd";
 import { SearchOutlined , QuestionCircleOutlined} from "@ant-design/icons";
 import "antd/dist/antd.css";
@@ -100,102 +100,112 @@ export const Dispatch = () => {
         },
       ];
 
-      const data = [
-        {
-          key: 1,
-          dispatch_id: "AG00100",
-          description: "desc101",
-          start_date: "02/09/2008",
-          operators: "operators 14",
-          org_code: "WAHOC0",
-          approval_requested: "yes",
-          sync_text: "pending",
-          process_status: "01",
-          status: "approved",
-          action: "Complete Dispatch",
-        },
-        {
-            key: 2,
-            dispatch_id: "AG00325",
-            description: "desc56",
-            start_date: "06/12/2018",
-            operators: "operators 29",
-            org_code: "WAHOC32",
-            approval_requested: "yes",
-            sync_text: "checked",
-            process_status: "03",
-            status: "approved",
-            action: "Complete Dispatch",
-          },
-          {
-            key: 3,
-            dispatch_id: "AG00256",
-            description: "desc479",
-            start_date: "04/07/2009",
-            operators: "operators 40",
-            org_code: "WAHOC400",
-            approval_requested: "no",
-            sync_text: "rejected",
-            process_status: "05",
-            status: "rejected",
-            action: "Complete Dispatch",
-          },
-          {
-            key: 4,
-            dispatch_id: "AG00420",
-            description: "desc20",
-            start_date: "31/02/2020",
-            operators: "operators 232",
-            org_code: "WAHOC023",
-            approval_requested: "yes",
-            sync_text: "pending",
-            process_status: "02",
-            status: "approved",
-            action: "Complete Dispatch",
-          },
-          {
-            key: 5,
-            dispatch_id: "AG00073",
-            description: "desc07",
-            start_date: "12/05/2015",
-            operators: "operators 21",
-            org_code: "WAHOC021",
-            approval_requested: "no",
-            sync_text: "pending",
-            process_status: "03",
-            status: "rejected",
-            action: "Complete Dispatch",
-          },
-          {
-            key: 6,
-            dispatch_id: "AG00173",
-            description: "desc16",
-            start_date: "22/04/2016",
-            operators: "operators 114",
-            org_code: "WAHOC014",
-            approval_requested: "yes",
-            sync_text: "rejected",
-            process_status: "04",
-            status: "rejected",
-            action: "Complete Dispatch",
-          },
-          {
-            key: 7,
-            dispatch_id: "AG00132",
-            description: "desc89",
-            start_date: "07/07/2017",
-            operators: "operators 19",
-            org_code: "WAHOC079",
-            approval_requested: "yes",
-            sync_text: "pending",
-            process_status: "01",
-            status: "pending",
-            action: "Complete Dispatch",
-          },
-      ];
+      // const data = [
+      //   {
+      //     key: 1,
+      //     dispatch_id: "AG00100",
+      //     description: "desc101",
+      //     start_date: "02/09/2008",
+      //     operators: "operators 14",
+      //     org_code: "WAHOC0",
+      //     approval_requested: "yes",
+      //     sync_text: "pending",
+      //     process_status: "01",
+      //     status: "Approved",
+      //     action: "Complete Dispatch",
+      //   },
+      //   {
+      //       key: 2,
+      //       dispatch_id: "AG00325",
+      //       description: "desc56",
+      //       start_date: "06/12/2018",
+      //       operators: "operators 29",
+      //       org_code: "WAHOC32",
+      //       approval_requested: "yes",
+      //       sync_text: "checked",
+      //       process_status: "03",
+      //       status: "Approved",
+      //       action: "Complete Dispatch",
+      //     },
+      //     {
+      //       key: 3,
+      //       dispatch_id: "AG00256",
+      //       description: "desc479",
+      //       start_date: "04/07/2009",
+      //       operators: "operators 40",
+      //       org_code: "WAHOC400",
+      //       approval_requested: "no",
+      //       sync_text: "rejected",
+      //       process_status: "05",
+      //       status: "Approved",
+      //       action: "Complete Dispatch",
+      //     },
+      //     {
+      //       key: 4,
+      //       dispatch_id: "AG00420",
+      //       description: "desc20",
+      //       start_date: "31/02/2020",
+      //       operators: "operators 232",
+      //       org_code: "WAHOC023",
+      //       approval_requested: "yes",
+      //       sync_text: "pending",
+      //       process_status: "02",
+      //       status: "Approved",
+      //       action: "Complete Dispatch",
+      //     },
+      //     {
+      //       key: 5,
+      //       dispatch_id: "AG00073",
+      //       description: "desc07",
+      //       start_date: "12/05/2015",
+      //       operators: "operators 21",
+      //       org_code: "WAHOC021",
+      //       approval_requested: "no",
+      //       sync_text: "pending",
+      //       process_status: "03",
+      //       status: "Approved",
+      //       action: "Complete Dispatch",
+      //     },
+      //     {
+      //       key: 6,
+      //       dispatch_id: "AG00173",
+      //       description: "desc16",
+      //       start_date: "22/04/2016",
+      //       operators: "operators 114",
+      //       org_code: "WAHOC014",
+      //       approval_requested: "yes",
+      //       sync_text: "rejected",
+      //       process_status: "04",
+      //       status: "Approved",
+      //       action: "Complete Dispatch",
+      //     },
+      //     {
+      //       key: 7,
+      //       dispatch_id: "AG00132",
+      //       description: "desc89",
+      //       start_date: "07/07/2017",
+      //       operators: "operators 19",
+      //       org_code: "WAHOC079",
+      //       approval_requested: "yes",
+      //       sync_text: "pending",
+      //       process_status: "01",
+      //       status: "Approved",
+      //       action: "Complete Dispatch",
+      //     },
+      // ];
+
+      useEffect(()=>{
+        fetch( "https://62a17273cd2e8da9b0f16c3e.mockapi.io/search/dispatchlist")
+        .then((res) => res.json())
+        .then((data) => { 
+          console.log("printing data inside fetch ",data[0].Data);
+          setSearchList(data[0].Data);
+          setFilterSearch(data[0].Data);
+        })
+      },[])
       
-      const [searchList, setSearchList] = useState(data)
-  const [filterSearch, setFilterSearch] = useState(data)
+      const [searchList, setSearchList] = useState([])
+  const [filterSearch, setFilterSearch] = useState([])
   console.log("printing data ", searchList)
   function onChange(pagination, filters, sorter, extra) {
     console.log("here is the params : ", pagination, filters, sorter, extra);
@@ -252,6 +262,7 @@ export const Dispatch = () => {
         <Col span={6}>
           {/* <Col span={6} style={{ textAlign: "left", margin: "0 0 20px 10px" }}> */}
           <Input
+            id="searching"
             type="search"
             placeholder="Search document no"
             className="font-poppins font-medium text-xs rounded-lg leading-normal"

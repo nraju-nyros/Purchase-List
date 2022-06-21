@@ -38,6 +38,7 @@ export const DispatchEquipment = ({
   const columns = [
     {
         title: "  ",
+        
         dataIndex: "Id",
         key: "Id", 
         width: "2vw",
@@ -59,6 +60,7 @@ export const DispatchEquipment = ({
           return (
             <div>
               <Radio
+                id="radiobutton"
                 type="checkbox"
                 className="radiobox"
                 checked={record.isActive}
@@ -289,6 +291,7 @@ export const DispatchEquipment = ({
                           <Input
                             // value={query}
                             type="search"
+                            id="searching"
                             placeholder="Search by Admin No. Serial No. or Description"
                             style={{
                                 borderRadius: "20px",

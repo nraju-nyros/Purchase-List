@@ -774,7 +774,7 @@ export const DiscopsMaintenanceDashboard = () => {
         </SideDrawer>
       )}
 
-      <Link to={"home/dispatch"}> Dispatch</Link> 
+      <Link to={"/home/createpurchase1"}> createPurchase</Link> 
       </Layout>    
     )
 }

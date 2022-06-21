@@ -13,8 +13,8 @@ export const NotificationsDeviceList = ({
   handleNext,
   handleDeviceSelection,
   ctx,
-  data,
-  setData,
+  // data,
+  // setData,
   query,
   handleEquipmentSearch,
   selectedDevice,
@@ -23,6 +23,7 @@ export const NotificationsDeviceList = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isCreateNotification, setIsCreateNotification] = useState(false);
+  const [data , setData] = useState([]);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -371,6 +372,7 @@ export const NotificationsDeviceList = ({
       >
         <Button
           className="bg-blue-text text-white p-5 flex items-center rounded-lg px-7 "
+          id="button-next"
           // className="bg-blue-text border-0 text-white text-center "
           onClick={() => onNext()}
           disabled={!data.filter((item) => item.isActive).length}
