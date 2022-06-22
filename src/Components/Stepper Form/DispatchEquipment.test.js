@@ -2,9 +2,7 @@ import { render , screen , fireEvent } from "@testing-library/react";
 import { DispatchEquipment } from "./DispatchEquipment";
 import {BrowserRouter as Router} from 'react-router-dom';
 import userEvent from "@testing-library/user-event";
-
 describe("describe inside dispatch.js ",  () => {
-   
     test("testing for search title ", ()=>{
         render(
             <Router>

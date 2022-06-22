@@ -6,7 +6,7 @@ import { CustomInput } from "../Customs/CustomInput";
 import { CustomSwitchToggle } from "../Customs/CustomSwitchToggle";
 
 export const AddExternalOperatorForm = ({
-  initialValues,
+  // initialValues,
   externalOperatorValues,
 }) => {
   const validationSchema = Yup.object().shape({
@@ -23,6 +23,12 @@ export const AddExternalOperatorForm = ({
     console.log(val);
     externalOperatorValues(val);
     resetForm({ initialValues });
+  };
+   const initialValues = {
+        firstname: "",
+        lastname: "",
+
+
   };
 
   const formik = useFormik({
@@ -54,7 +60,7 @@ export const AddExternalOperatorForm = ({
                     </h4>
 
                     <CustomInput
-                      inputValue={values.firstname}
+                      // inputValue={values.firstname}
                       placeholder="First Name"
                       label="First Name"
                       requiredField={true}
@@ -64,7 +70,7 @@ export const AddExternalOperatorForm = ({
                     <br />
 
                     <CustomInput
-                      inputValue={values.lastname}
+                      // inputValue={values.lastname}
                       placeholder="Last Name"
                       label="Last Name"
                       requiredField={true}
@@ -78,7 +84,7 @@ export const AddExternalOperatorForm = ({
                     </h4>
                     <CustomSwitchToggle
                       className="flex-row-reverse mt-2"
-                      switchValue={values.permitValidated}
+                      // switchValue={values.permitValidated}
                       onText="Yes"
                       offText="No"
                       onChange={(val) =>

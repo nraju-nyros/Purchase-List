@@ -121,7 +121,7 @@ export const DispatchNotification = ({
           style={{ background: "#F3F5F8" }}
           className="flex-grow flex flex-col"
         >
-          {/* <div
+         {/* <div
             className="px-44 pt-10 pb-5 text-pickled-bluewood font-semibold"
             style={{ fontSize: "0.8125rem" }}
           >

@@ -181,7 +181,7 @@ export const AddOperatorForm = ({
                     </Select> */}
 
                     <SelectDropdown
-                      value={values.Value}
+                      // value={values.Value}
                       mode="single"
                       showSearch={true}
                       optionKeyName="Id"
@@ -207,8 +207,8 @@ export const AddOperatorForm = ({
                     />
                     <br />
                     <SelectDropdown
-                      dataList={values.operatorTypeName}
-                      value={values.operatorTypeName}
+                      // dataList={values.operatorTypeName}
+                      // value={values.operatorTypeName}
                       label="Operator Type"
                       optionsList={operatorListOptionArr}
                       mode="single"

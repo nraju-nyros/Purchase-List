@@ -44,7 +44,8 @@ export const DispatchNotification1 = ({
   const [trainingEventList, setTrainingEventList] = useState([]);
   const [trainingLevelList, setTrainingLevelList] = useState([]);
   //const [current, setCurrent] = useState(0);
-  const deadlineOverride = selectedDevice.OperStatusName;
+  // const deadlineOverride = selectedDevice.OperStatusName;
+  const deadlineOverride = "";
   const initialValues = {
     id: "",
     modelName: selectedDevice?.ModelNo,

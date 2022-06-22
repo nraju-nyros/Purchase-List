@@ -24,7 +24,7 @@ import { SearchBox } from "../SearchBox";
 import moment from "moment";
 import * as Yup from "yup";
 
-const AddOperator = ({
+export const AddOperator = ({
   current,
   handlePrev,
   handleClose,
@@ -421,5 +421,3 @@ const AddOperator = ({
     </>
   );
 };
-
-export default AddOperator;
