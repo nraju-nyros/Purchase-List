@@ -3,7 +3,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { DispatchEquipment } from "../Stepper Form/DispatchEquipment";
 // import { DispatchNotification } from '../Stepper Form/DispatchNotification'
 import { DispatchNotification1 } from "../Stepper Form/DispatchNotification1";
-import AddOperator from "../Stepper Form/AddOperator";
+import {AddOperator} from "../Stepper Form/AddOperator";
 import * as Yup from "yup";
 import { Form, FormikProvider, useFormik } from "formik";
 import { Wizard } from "../Wizard/Wizard";
